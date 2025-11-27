@@ -1,0 +1,129 @@
+//
+//  W3C_SVG2.Painting.Mask.swift
+//  swift-w3c-svg
+//
+//  The 'mask' element (SVG 2 Section 14.4)
+//
+
+extension W3C_SVG2.Painting {
+    /// The 'mask' element
+    ///
+    /// W3C SVG 2 Section 14.4
+    /// https://www.w3.org/TR/SVG2/masking.html#MaskElement
+    ///
+    /// The 'mask' element defines an alpha mask for compositing the current object
+    /// into the background.
+    ///
+    /// ## Mask Region
+    ///
+    /// - **x**: X-coordinate of mask region (default: -10%)
+    /// - **y**: Y-coordinate of mask region (default: -10%)
+    /// - **width**: Width of mask region (default: 120%)
+    /// - **height**: Height of mask region (default: 120%)
+    ///
+    /// ## Coordinate System
+    ///
+    /// - **maskUnits**: Defines the coordinate system for x, y, width, height
+    ///
+    /// ## Behavior
+    ///
+    /// The mask affects the alpha channel of the masked element. White in the mask
+    /// means fully opaque, black means fully transparent, and shades of gray provide
+    /// intermediate opacity values.
+    ///
+    /// ## Example
+    ///
+    /// ```swift
+    /// let mask = W3C_SVG2.Painting.Mask(
+    ///     id: "myMask",
+    ///     x: 0,
+    ///     y: 0,
+    ///     width: 100,
+    ///     height: 100
+    /// )
+    /// ```
+    ///
+    /// ## See Also
+    ///
+    /// - ``ClipPath``
+    public struct Mask: SVGElementType, Sendable, Equatable {
+        /// Identifier for referencing the mask
+        public let id: String?
+
+        /// X-coordinate of mask region
+        ///
+        /// Default value: -10%
+        public let x: Double?
+
+        /// Y-coordinate of mask region
+        ///
+        /// Default value: -10%
+        public let y: Double?
+
+        /// Width of mask region
+        ///
+        /// Default value: 120%
+        public let width: Double?
+
+        /// Height of mask region
+        ///
+        /// Default value: 120%
+        public let height: Double?
+
+        /// Coordinate system for mask geometry (x, y, width, height)
+        ///
+        /// Default value: objectBoundingBox
+        public let maskUnits: MaskUnits?
+
+        /// Coordinate system for mask contents
+        ///
+        /// Default value: userSpaceOnUse
+        public let maskContentUnits: MaskUnits?
+
+        /// Coordinate system for mask geometry
+        ///
+        /// W3C SVG 2 Section 14.4.2
+        /// https://www.w3.org/TR/SVG2/masking.html#MaskElementMaskUnitsAttribute
+        public enum MaskUnits: String, Sendable, Equatable {
+            /// Coordinate system established by user space
+            case userSpaceOnUse
+
+            /// Coordinate system relative to bounding box (0-1 range)
+            case objectBoundingBox
+        }
+
+        /// Creates a mask element
+        ///
+        /// - Parameters:
+        ///   - id: Identifier for referencing (default: nil)
+        ///   - x: X-coordinate of mask region (default: nil, uses -10%)
+        ///   - y: Y-coordinate of mask region (default: nil, uses -10%)
+        ///   - width: Width of mask region (default: nil, uses 120%)
+        ///   - height: Height of mask region (default: nil, uses 120%)
+        ///   - maskUnits: Coordinate system for geometry (default: nil, uses objectBoundingBox)
+        ///   - maskContentUnits: Coordinate system for content (default: nil, uses userSpaceOnUse)
+        public init(
+            id: String? = nil,
+            x: Double? = nil,
+            y: Double? = nil,
+            width: Double? = nil,
+            height: Double? = nil,
+            maskUnits: MaskUnits? = nil,
+            maskContentUnits: MaskUnits? = nil
+        ) {
+            self.id = id
+            self.x = x
+            self.y = y
+            self.width = width
+            self.height = height
+            self.maskUnits = maskUnits
+            self.maskContentUnits = maskContentUnits
+        }
+
+        /// SVG element tag name
+        public static let tagName = "mask"
+
+        /// Whether this element is self-closing
+        public static let isSelfClosing = false
+    }
+}
