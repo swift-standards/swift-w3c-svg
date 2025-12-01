@@ -58,7 +58,8 @@ extension W3C_SVG2.Types {
                 return "translate(\(x.formatted(.number))) \(y.formatted(.number)))"
             case .rotate(let angle, let cx, let cy):
                 if let cx = cx, let cy = cy {
-                    return "rotate(\(angle.formatted(.number))) \(cx.formatted(.number))) \(cy.formatted(.number)))"
+                    return
+                        "rotate(\(angle.formatted(.number))) \(cx.formatted(.number))) \(cy.formatted(.number)))"
                 } else {
                     return "rotate(\(angle.formatted(.number))))"
                 }
@@ -73,7 +74,8 @@ extension W3C_SVG2.Types {
             case .skewY(let angle):
                 return "skewY(\(angle.formatted(.number)))"
             case .matrix(let a, let b, let c, let d, let e, let f):
-                return "matrix(\(a.formatted(.number)) \(b.formatted(.number)) \(c.formatted(.number)) \(d.formatted(.number)) \(e.formatted(.number)) \(f.formatted(.number)))"
+                return
+                    "matrix(\(a.formatted(.number)) \(b.formatted(.number)) \(c.formatted(.number)) \(d.formatted(.number)) \(e.formatted(.number)) \(f.formatted(.number)))"
             }
         }
     }
