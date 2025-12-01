@@ -29,7 +29,7 @@ extension W3C_SVG2.Types {
     /// let current = W3C_SVG2.Types.Color.currentColor
     /// let none = W3C_SVG2.Types.Color.none
     /// ```
-    public enum Color: Sendable, Equatable {
+    public enum Color: Sendable, Equatable, CustomStringConvertible {
         /// Named color (e.g., "red", "blue", "green")
         case named(String)
 
@@ -49,7 +49,7 @@ extension W3C_SVG2.Types {
         case none
 
         /// String representation for SVG output
-        public var stringValue: String {
+        public var description: String {
             switch self {
             case .named(let name):
                 return name

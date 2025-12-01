@@ -32,7 +32,7 @@ extension W3C_SVG2.Types {
     /// let rotate = W3C_SVG2.Types.Transform.rotate(angle: 45, cx: 50, cy: 50)
     /// let scale = W3C_SVG2.Types.Transform.scale(x: 2, y: 2)
     /// ```
-    public enum Transform: Sendable, Equatable {
+    public enum Transform: Sendable, Equatable, CustomStringConvertible {
         /// Translate by (tx, ty)
         case translate(x: Double, y: Double)
 
@@ -52,7 +52,7 @@ extension W3C_SVG2.Types {
         case matrix(a: Double, b: Double, c: Double, d: Double, e: Double, f: Double)
 
         /// String representation for SVG output
-        public var stringValue: String {
+        public var description: String {
             switch self {
             case .translate(let x, let y):
                 return "translate(\(x.formatted(.number)) \(y.formatted(.number)))"

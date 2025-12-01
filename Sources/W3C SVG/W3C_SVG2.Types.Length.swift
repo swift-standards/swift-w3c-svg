@@ -37,7 +37,7 @@ extension W3C_SVG2.Types {
     /// let percent = W3C_SVG2.Types.Length.percentage(50) // "50%"
     /// let ems = W3C_SVG2.Types.Length.em(2.5)          // "2.5em"
     /// ```
-    public enum Length: Sendable, Equatable {
+    public enum Length: Sendable, Equatable, CustomStringConvertible {
         /// Unitless number
         case number(Double)
 
@@ -69,7 +69,7 @@ extension W3C_SVG2.Types {
         case `in`(Double)
 
         /// String representation for SVG output
-        public var stringValue: String {
+        public var description: String {
             switch self {
             case .number(let value):
                 return value.formatted(.number)
