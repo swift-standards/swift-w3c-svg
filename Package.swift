@@ -30,12 +30,11 @@ let package = Package(
     swiftLanguageModes: [.v6]
 )
 
-let swiftSettings: [SwiftSetting] = [
-    .enableUpcomingFeature("MemberImportVisibility"),
-    .enableUpcomingFeature("StrictUnsafe"),
-    .enableUpcomingFeature("NonisolatedNonsendingByDefault")
-]
-
-for index in package.targets.indices {
-    package.targets[index].swiftSettings = (package.targets[index].swiftSettings ?? []) + swiftSettings
+for target in package.targets where ![.system, .binary, .plugin].contains(target.type) {
+    let existing = target.swiftSettings ?? []
+    target.swiftSettings = existing + [
+        .enableUpcomingFeature("ExistentialAny"),
+        .enableUpcomingFeature("InternalImportsByDefault"),
+        .enableUpcomingFeature("MemberImportVisibility")
+    ]
 }
