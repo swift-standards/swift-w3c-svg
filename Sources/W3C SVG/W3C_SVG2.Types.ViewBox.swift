@@ -5,6 +5,8 @@
 //  SVG viewBox attribute (SVG 2 Section 8.2)
 //
 
+import Numeric_Formatting
+
 extension W3C_SVG2.Types {
     /// SVG viewBox value
     ///
@@ -52,7 +54,7 @@ extension W3C_SVG2.Types {
 
         /// String representation for SVG output
         public var stringValue: String {
-            "\(minX) \(minY) \(width) \(height)"
+            "\(minX.formatted(.number)) \(minY.formatted(.number)) \(width.formatted(.number)) \(height.formatted(.number))"
         }
     }
 }

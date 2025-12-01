@@ -5,6 +5,8 @@
 //  SVG transform functions (SVG 2 Section 8)
 //
 
+import Numeric_Formatting
+
 extension W3C_SVG2.Types {
     /// SVG transform function
     ///
@@ -53,25 +55,25 @@ extension W3C_SVG2.Types {
         public var stringValue: String {
             switch self {
             case .translate(let x, let y):
-                return "translate(\(x) \(y))"
+                return "translate(\(x.formatted(.number))) \(y.formatted(.number)))"
             case .rotate(let angle, let cx, let cy):
                 if let cx = cx, let cy = cy {
-                    return "rotate(\(angle) \(cx) \(cy))"
+                    return "rotate(\(angle.formatted(.number))) \(cx.formatted(.number))) \(cy.formatted(.number)))"
                 } else {
-                    return "rotate(\(angle))"
+                    return "rotate(\(angle.formatted(.number))))"
                 }
             case .scale(let x, let y):
                 if let y = y {
-                    return "scale(\(x) \(y))"
+                    return "scale(\(x.formatted(.number))) \(y.formatted(.number)))"
                 } else {
-                    return "scale(\(x))"
+                    return "scale(\(x.formatted(.number)))"
                 }
             case .skewX(let angle):
-                return "skewX(\(angle))"
+                return "skewX(\(angle.formatted(.number)))"
             case .skewY(let angle):
-                return "skewY(\(angle))"
+                return "skewY(\(angle.formatted(.number)))"
             case .matrix(let a, let b, let c, let d, let e, let f):
-                return "matrix(\(a) \(b) \(c) \(d) \(e) \(f))"
+                return "matrix(\(a.formatted(.number)) \(b.formatted(.number)) \(c.formatted(.number)) \(d.formatted(.number)) \(e.formatted(.number)) \(f.formatted(.number)))"
             }
         }
     }

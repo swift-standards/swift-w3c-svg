@@ -103,7 +103,7 @@ extension W3C_SVG2.Types.Length: ExpressibleByIntegerLiteral {
 }
 
 extension W3C_SVG2.Types.Length: ExpressibleByFloatLiteral {
-    public init(floatLiteral value: Float) {
+    public init(floatLiteral value: Double) {
         self = .number(.init(value))
     }
 }
