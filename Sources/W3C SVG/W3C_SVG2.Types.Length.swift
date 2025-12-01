@@ -5,6 +5,8 @@
 //  SVG length values (SVG 2 Section 4.1)
 //
 
+import Numeric_Formatting
+
 extension W3C_SVG2.Types {
     /// SVG length value
     ///
@@ -70,35 +72,26 @@ extension W3C_SVG2.Types {
         public var stringValue: String {
             switch self {
             case .number(let value):
-                return Self.formatValue(value)
+                return value.formatted(.number)
             case .percentage(let value):
-                return "\(Self.formatValue(value))%"
+                return value.formatted(.number) + "%"
             case .px(let value):
-                return "\(Self.formatValue(value))px"
+                return value.formatted(.number) + "px"
             case .em(let value):
-                return "\(Self.formatValue(value))em"
+                return value.formatted(.number) + "em"
             case .ex(let value):
-                return "\(Self.formatValue(value))ex"
+                return value.formatted(.number) + "ex"
             case .pt(let value):
-                return "\(Self.formatValue(value))pt"
+                return value.formatted(.number) + "pt"
             case .pc(let value):
-                return "\(Self.formatValue(value))pc"
+                return value.formatted(.number) + "pc"
             case .mm(let value):
-                return "\(Self.formatValue(value))mm"
+                return value.formatted(.number) + "mm"
             case .cm(let value):
-                return "\(Self.formatValue(value))cm"
+                return value.formatted(.number) + "cm"
             case .in(let value):
-                return "\(Self.formatValue(value))in"
+                return value.formatted(.number) + "in"
             }
-        }
-
-        /// Format a Double value for SVG, removing unnecessary decimal points
-        private static func formatValue(_ value: Double) -> String {
-            // Simple approach: remove .0 from whole numbers
-            if value.truncatingRemainder(dividingBy: 1) == 0 {
-                return String(Int(value))
-            }
-            return String(value)
         }
     }
 }

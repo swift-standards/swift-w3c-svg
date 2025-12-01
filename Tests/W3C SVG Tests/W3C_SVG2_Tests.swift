@@ -30,6 +30,15 @@ struct W3C_SVG2_Tests {
             let length = W3C_SVG2.Types.Length.em(2.5)
             #expect(length.stringValue == "2.5em")
         }
+
+        @Test("Length formatted")
+        func lengthFormatted() {
+            let length1: W3C_SVG2.Types.Length = 1
+            #expect(length1.stringValue == "1")
+
+            let length2: W3C_SVG2.Types.Length = 1.0
+            #expect(length2.stringValue == "1")
+        }
     }
 
     @Suite("Types - Color")
