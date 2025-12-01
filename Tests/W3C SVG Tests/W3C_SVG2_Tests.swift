@@ -67,19 +67,19 @@ struct W3C_SVG2_Tests {
         @Test("Transform translate")
         func transformTranslate() {
             let transform = W3C_SVG2.Types.Transform.translate(x: 10, y: 20)
-            #expect(transform.stringValue == "translate(10.0 20.0)")
+            #expect(transform.stringValue == "translate(10 20)")
         }
 
         @Test("Transform rotate")
         func transformRotate() {
             let transform = W3C_SVG2.Types.Transform.rotate(angle: 45)
-            #expect(transform.stringValue == "rotate(45.0)")
+            #expect(transform.stringValue == "rotate(45)")
         }
 
         @Test("Transform scale")
         func transformScale() {
             let transform = W3C_SVG2.Types.Transform.scale(x: 2, y: 3)
-            #expect(transform.stringValue == "scale(2.0 3.0)")
+            #expect(transform.stringValue == "scale(2 3)")
         }
     }
 
@@ -88,13 +88,13 @@ struct W3C_SVG2_Tests {
         @Test("ViewBox creation")
         func viewBoxCreation() {
             let vb = W3C_SVG2.Types.ViewBox(width: 100, height: 200)
-            #expect(vb.stringValue == "0.0 0.0 100.0 200.0")
+            #expect(vb.stringValue == "0 0 100 200")
         }
 
         @Test("ViewBox with offset")
         func viewBoxWithOffset() {
             let vb = W3C_SVG2.Types.ViewBox(minX: 10, minY: 20, width: 100, height: 200)
-            #expect(vb.stringValue == "10.0 20.0 100.0 200.0")
+            #expect(vb.stringValue == "10 20 100 200")
         }
     }
 
@@ -215,7 +215,7 @@ struct W3C_SVG2_Tests {
             )
             #expect(svg.width == .number(100))
             #expect(svg.height == .number(100))
-            #expect(svg.viewBox?.stringValue == "0.0 0.0 100.0 100.0")
+            #expect(svg.viewBox?.stringValue == "0 0 100 100")
         }
 
         @Test("SVG tag name")
@@ -285,7 +285,7 @@ struct W3C_SVG2_Tests {
                 viewBox: W3C_SVG2.Types.ViewBox(width: 24, height: 24)
             )
             #expect(symbol.id == "icon")
-            #expect(symbol.viewBox?.stringValue == "0.0 0.0 24.0 24.0")
+            #expect(symbol.viewBox?.stringValue == "0 0 24 24")
         }
 
         @Test("Symbol tag name")
@@ -460,7 +460,7 @@ struct W3C_SVG2_Tests {
                 height: 20,
                 viewBox: W3C_SVG2.Types.ViewBox(width: 10, height: 10)
             )
-            #expect(pattern.viewBox?.stringValue == "0.0 0.0 10.0 10.0")
+            #expect(pattern.viewBox?.stringValue == "0 0 10 10")
         }
     }
 

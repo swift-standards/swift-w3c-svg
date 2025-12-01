@@ -55,17 +55,17 @@ extension W3C_SVG2.Types {
         public var stringValue: String {
             switch self {
             case .translate(let x, let y):
-                return "translate(\(x.formatted(.number))) \(y.formatted(.number)))"
+                return "translate(\(x.formatted(.number)) \(y.formatted(.number)))"
             case .rotate(let angle, let cx, let cy):
                 if let cx = cx, let cy = cy {
                     return
-                        "rotate(\(angle.formatted(.number))) \(cx.formatted(.number))) \(cy.formatted(.number)))"
+                        "rotate(\(angle.formatted(.number)) \(cx.formatted(.number)) \(cy.formatted(.number)))"
                 } else {
-                    return "rotate(\(angle.formatted(.number))))"
+                    return "rotate(\(angle.formatted(.number)))"
                 }
             case .scale(let x, let y):
                 if let y = y {
-                    return "scale(\(x.formatted(.number))) \(y.formatted(.number)))"
+                    return "scale(\(x.formatted(.number)) \(y.formatted(.number)))"
                 } else {
                     return "scale(\(x.formatted(.number)))"
                 }
