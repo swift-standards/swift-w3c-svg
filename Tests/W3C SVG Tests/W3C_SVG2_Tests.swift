@@ -119,8 +119,12 @@ struct W3C_SVG2_Tests {
         @Test("Rounded rectangle")
         func roundedRectangle() {
             let rect = W3C_SVG2.Shapes.Rectangle(
-                x: 10, y: 10, width: 100, height: 80,
-                rx: 5, ry: 5
+                x: 10,
+                y: 10,
+                width: 100,
+                height: 80,
+                rx: 5,
+                ry: 5
             )
             #expect(rect.rx == 5)
             #expect(rect.ry == 5)
@@ -212,7 +216,12 @@ struct W3C_SVG2_Tests {
 
         @Test("SVG with position")
         func svgWithPosition() {
-            let svg = W3C_SVG2.Document.SVG(x: .number(10), y: .number(20), width: .number(100), height: .number(100))
+            let svg = W3C_SVG2.Document.SVG(
+                x: .number(10),
+                y: .number(20),
+                width: .number(100),
+                height: .number(100)
+            )
             #expect(svg.x == .number(10))
             #expect(svg.y == .number(20))
         }
