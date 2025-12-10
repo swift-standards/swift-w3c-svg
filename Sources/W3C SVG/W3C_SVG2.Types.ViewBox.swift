@@ -5,7 +5,7 @@
 //  SVG viewBox attribute (SVG 2 Section 8.2)
 //
 
-import Numeric_Formatting
+import Formatting
 
 extension W3C_SVG2.Types {
     /// SVG viewBox value
