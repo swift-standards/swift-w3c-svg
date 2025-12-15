@@ -18,13 +18,14 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(url: "https://github.com/swift-standards/swift-standards", from: "0.10.0"),
+        .package(url: "https://github.com/swift-standards/swift-standards", from: "0.15.0"),
     ],
     targets: [
         .target(
             name: "W3C SVG",
             dependencies: [
-                .product(name: "Formatting", package: "swift-standards")
+                .product(name: "Formatting", package: "swift-standards"),
+                .product(name: "Geometry", package: "swift-standards"),
             ]
         ),
         .testTarget(
