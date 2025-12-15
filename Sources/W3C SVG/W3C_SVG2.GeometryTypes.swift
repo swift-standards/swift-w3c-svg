@@ -31,6 +31,9 @@ extension W3C_SVG2 {
     /// A generic arc parameterized by coordinate space.
     public typealias Arc<Space> = Geometry<Double, Space>.Arc
 
+    /// A generic ellipse parameterized by coordinate space.
+    public typealias Ellipse<Space> = Geometry<Double, Space>.Ellipse
+
     /// A generic line segment parameterized by coordinate space.
     public typealias LineSegment<Space> = Geometry<Double, Space>.Line.Segment
 

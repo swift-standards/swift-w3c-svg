@@ -62,11 +62,43 @@ extension W3C_SVG2.Paths.Path {
                 return serializeBezier(bezier)
 
             case .arc(let arc):
-                // Convert arc to beziers for serialization
+                // Convert circular arc to beziers for serialization
                 // (SVG arcs use endpoint parameterization which is complex to derive)
                 let beziers = [W3C_SVG2.Bezier<W3C_SVG.Space>](arc: arc)
                 return beziers.map { serializeBezier($0) }.joined(separator: " ")
+
+            case .ellipticalArc(let arc):
+                // Serialize as SVG arc command
+                return serializeEllipticalArc(arc)
             }
+        }
+
+        /// Serialize an elliptical arc to SVG A command.
+        ///
+        /// Converts from center parameterization back to SVG endpoint parameterization.
+        private static func serializeEllipticalArc(
+            _ arc: W3C_SVG2.Ellipse<W3C_SVG.Space>.Arc
+        ) -> String {
+            // Get the endpoint
+            let endPoint = arc.endPoint
+
+            // Convert rotation from radians to degrees
+            let rotationDegrees = arc.rotation._rawValue * 180 / .pi
+
+            // Determine flags from sweep angle
+            let sweepRaw = arc.sweep._rawValue
+            let largeArcFlag = abs(sweepRaw) > .pi
+            let sweepFlag = sweepRaw > 0
+
+            let rx = arc.semiMajor._rawValue.formatted(.number)
+            let ry = arc.semiMinor._rawValue.formatted(.number)
+            let rot = rotationDegrees.formatted(.number)
+            let large = largeArcFlag ? "1" : "0"
+            let sweep = sweepFlag ? "1" : "0"
+            let x = endPoint.x._rawValue.formatted(.number)
+            let y = endPoint.y._rawValue.formatted(.number)
+
+            return "A \(rx) \(ry) \(rot) \(large) \(sweep) \(x) \(y)"
         }
 
         /// Serialize a Bezier curve.

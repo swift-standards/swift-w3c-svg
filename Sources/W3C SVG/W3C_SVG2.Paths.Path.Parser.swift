@@ -166,11 +166,9 @@ extension W3C_SVG2.Paths.Path {
                     currentPoint = end
 
                 case .arc(let arcCmd):
-                    // Convert SVG elliptical arc to Beziers
-                    let beziers = arcCmd.toBeziers(from: currentPoint)
-                    for bezier in beziers {
-                        currentSegments.append(.bezier(bezier))
-                    }
+                    // Convert SVG arc command to Geometry.Ellipse.Arc segment
+                    let ellipseArc = arcCmd.toEllipseArc(from: currentPoint)
+                    currentSegments.append(.ellipticalArc(ellipseArc))
                     currentPoint = arcCmd.end
                     lastControlPoint = nil
 
