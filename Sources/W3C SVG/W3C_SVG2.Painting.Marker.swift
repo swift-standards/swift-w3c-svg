@@ -55,22 +55,22 @@ extension W3C_SVG2.Painting {
         /// X-coordinate of marker reference point
         ///
         /// Default value: 0
-        public let refX: Double?
+        public let refX: W3C_SVG2.X?
 
         /// Y-coordinate of marker reference point
         ///
         /// Default value: 0
-        public let refY: Double?
+        public let refY: W3C_SVG2.Y?
 
         /// Width of marker viewport
         ///
         /// Default value: 3
-        public let markerWidth: Double?
+        public let markerWidth: W3C_SVG2.Width?
 
         /// Height of marker viewport
         ///
         /// Default value: 3
-        public let markerHeight: Double?
+        public let markerHeight: W3C_SVG2.Height?
 
         /// Orientation of marker
         ///
@@ -112,10 +112,10 @@ extension W3C_SVG2.Painting {
         public init(
             id: String? = nil,
             viewBox: W3C_SVG2.Types.ViewBox? = nil,
-            refX: Double? = nil,
-            refY: Double? = nil,
-            markerWidth: Double? = nil,
-            markerHeight: Double? = nil,
+            refX: W3C_SVG2.X? = nil,
+            refY: W3C_SVG2.Y? = nil,
+            markerWidth: W3C_SVG2.Width? = nil,
+            markerHeight: W3C_SVG2.Height? = nil,
             orient: String? = nil,
             markerUnits: Units? = nil,
             preserveAspectRatio: String? = nil

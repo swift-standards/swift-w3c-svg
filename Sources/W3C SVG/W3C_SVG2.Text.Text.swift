@@ -39,16 +39,16 @@ extension W3C_SVG2.Text {
     /// - ``TSpan``
     public struct Text: SVGElementType, Sendable, Equatable {
         /// X-coordinate for text positioning
-        public let x: Double?
+        public let x: W3C_SVG2.X?
 
         /// Y-coordinate for text positioning
-        public let y: Double?
+        public let y: W3C_SVG2.Y?
 
         /// X-axis shift for text positioning
-        public let dx: Double?
+        public let dx: W3C_SVG2.Dx?
 
         /// Y-axis shift for text positioning
-        public let dy: Double?
+        public let dy: W3C_SVG2.Dy?
 
         /// Text content to render
         public let content: String?
@@ -74,10 +74,10 @@ extension W3C_SVG2.Text {
         ///   - dy: Y-axis shift (default: nil)
         ///   - content: Text content (default: nil)
         public init(
-            x: Double? = nil,
-            y: Double? = nil,
-            dx: Double? = nil,
-            dy: Double? = nil,
+            x: W3C_SVG2.X? = nil,
+            y: W3C_SVG2.Y? = nil,
+            dx: W3C_SVG2.Dx? = nil,
+            dy: W3C_SVG2.Dy? = nil,
             content: String? = nil
         ) {
             self.x = x

@@ -66,3 +66,28 @@ extension W3C_SVG2.SVGSpace {
     /// 2D point in SVG coordinate space (convenience).
     public typealias Coordinate = W3C_SVG2.Point<W3C_SVG.Space>
 }
+
+// MARK: - Top-Level Type Aliases
+
+extension W3C_SVG2 {
+    /// X coordinate in SVG space
+    public typealias X = SVGSpace.X
+
+    /// Y coordinate in SVG space
+    public typealias Y = SVGSpace.Y
+
+    /// Width extent in SVG space
+    public typealias Width = SVGSpace.Width
+
+    /// Height extent in SVG space
+    public typealias Height = SVGSpace.Height
+
+    /// X displacement in SVG space
+    public typealias Dx = SVGSpace.Dx
+
+    /// Y displacement in SVG space
+    public typealias Dy = SVGSpace.Dy
+
+    /// Radius in SVG space
+    public typealias Radius = SVGSpace.Radius
+}

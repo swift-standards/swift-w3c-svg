@@ -53,22 +53,22 @@ extension W3C_SVG2.Painting {
         /// X-coordinate of mask region
         ///
         /// Default value: -10%
-        public let x: Double?
+        public let x: W3C_SVG2.X?
 
         /// Y-coordinate of mask region
         ///
         /// Default value: -10%
-        public let y: Double?
+        public let y: W3C_SVG2.Y?
 
         /// Width of mask region
         ///
         /// Default value: 120%
-        public let width: Double?
+        public let width: W3C_SVG2.Width?
 
         /// Height of mask region
         ///
         /// Default value: 120%
-        public let height: Double?
+        public let height: W3C_SVG2.Height?
 
         /// Coordinate system for mask geometry (x, y, width, height)
         ///
@@ -104,10 +104,10 @@ extension W3C_SVG2.Painting {
         ///   - maskContentUnits: Coordinate system for content (default: nil, uses userSpaceOnUse)
         public init(
             id: String? = nil,
-            x: Double? = nil,
-            y: Double? = nil,
-            width: Double? = nil,
-            height: Double? = nil,
+            x: W3C_SVG2.X? = nil,
+            y: W3C_SVG2.Y? = nil,
+            width: W3C_SVG2.Width? = nil,
+            height: W3C_SVG2.Height? = nil,
             maskUnits: Units? = nil,
             maskContentUnits: Units? = nil
         ) {

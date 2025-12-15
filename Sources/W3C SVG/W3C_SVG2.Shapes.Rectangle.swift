@@ -45,32 +45,32 @@ extension W3C_SVG2.Shapes {
         /// The x-coordinate of the side of the rectangle
         ///
         /// Default value: 0
-        public let x: Double?
+        public let x: W3C_SVG2.X?
 
         /// The y-coordinate of the side of the rectangle
         ///
         /// Default value: 0
-        public let y: Double?
+        public let y: W3C_SVG2.Y?
 
         /// The width of the rectangle
         ///
         /// A negative value is an error. A value of zero disables rendering.
-        public let width: Double?
+        public let width: W3C_SVG2.Width?
 
         /// The height of the rectangle
         ///
         /// A negative value is an error. A value of zero disables rendering.
-        public let height: Double?
+        public let height: W3C_SVG2.Height?
 
         /// The x-axis radius for rounded corners
         ///
         /// If not specified, defaults to ry if ry is specified, otherwise 0.
-        public let rx: Double?
+        public let rx: W3C_SVG2.Width?
 
         /// The y-axis radius for rounded corners
         ///
         /// If not specified, defaults to rx if rx is specified, otherwise 0.
-        public let ry: Double?
+        public let ry: W3C_SVG2.Height?
 
         /// Creates a rectangle element
         ///
@@ -82,12 +82,12 @@ extension W3C_SVG2.Shapes {
         ///   - rx: The x-axis corner radius (default: nil)
         ///   - ry: The y-axis corner radius (default: nil)
         public init(
-            x: Double? = nil,
-            y: Double? = nil,
-            width: Double? = nil,
-            height: Double? = nil,
-            rx: Double? = nil,
-            ry: Double? = nil
+            x: W3C_SVG2.X? = nil,
+            y: W3C_SVG2.Y? = nil,
+            width: W3C_SVG2.Width? = nil,
+            height: W3C_SVG2.Height? = nil,
+            rx: W3C_SVG2.Width? = nil,
+            ry: W3C_SVG2.Height? = nil
         ) {
             self.x = x
             self.y = y

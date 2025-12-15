@@ -64,18 +64,18 @@ extension W3C_SVG2.Document {
         /// X-coordinate offset (applies translate transformation)
         ///
         /// Default value: 0
-        public let x: Double?
+        public let x: W3C_SVG2.X?
 
         /// Y-coordinate offset (applies translate transformation)
         ///
         /// Default value: 0
-        public let y: Double?
+        public let y: W3C_SVG2.Y?
 
         /// Override width for referenced svg/symbol viewport
-        public let width: Double?
+        public let width: W3C_SVG2.Width?
 
         /// Override height for referenced svg/symbol viewport
-        public let height: Double?
+        public let height: W3C_SVG2.Height?
 
         /// Creates a use element
         ///
@@ -87,10 +87,10 @@ extension W3C_SVG2.Document {
         ///   - height: Viewport height override (default: nil)
         public init(
             href: String? = nil,
-            x: Double? = nil,
-            y: Double? = nil,
-            width: Double? = nil,
-            height: Double? = nil
+            x: W3C_SVG2.X? = nil,
+            y: W3C_SVG2.Y? = nil,
+            width: W3C_SVG2.Width? = nil,
+            height: W3C_SVG2.Height? = nil
         ) {
             self.href = href
             self.x = x

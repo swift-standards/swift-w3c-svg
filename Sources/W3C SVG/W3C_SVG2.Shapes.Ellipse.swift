@@ -34,22 +34,22 @@ extension W3C_SVG2.Shapes {
         /// The x-axis coordinate of the center of the ellipse
         ///
         /// Default value: 0
-        public let cx: Double?
+        public let cx: W3C_SVG2.X?
 
         /// The y-axis coordinate of the center of the ellipse
         ///
         /// Default value: 0
-        public let cy: Double?
+        public let cy: W3C_SVG2.Y?
 
         /// The x-axis radius of the ellipse
         ///
         /// A negative value is an error. A value of zero disables rendering.
-        public let rx: Double?
+        public let rx: W3C_SVG2.Width?
 
         /// The y-axis radius of the ellipse
         ///
         /// A negative value is an error. A value of zero disables rendering.
-        public let ry: Double?
+        public let ry: W3C_SVG2.Height?
 
         /// Creates an ellipse element
         ///
@@ -59,10 +59,10 @@ extension W3C_SVG2.Shapes {
         ///   - rx: The x-axis radius (default: nil)
         ///   - ry: The y-axis radius (default: nil)
         public init(
-            cx: Double? = nil,
-            cy: Double? = nil,
-            rx: Double? = nil,
-            ry: Double? = nil
+            cx: W3C_SVG2.X? = nil,
+            cy: W3C_SVG2.Y? = nil,
+            rx: W3C_SVG2.Width? = nil,
+            ry: W3C_SVG2.Height? = nil
         ) {
             self.cx = cx
             self.cy = cy

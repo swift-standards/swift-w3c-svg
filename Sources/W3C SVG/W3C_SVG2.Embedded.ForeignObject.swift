@@ -53,22 +53,22 @@ extension W3C_SVG2.Embedded {
         /// The x-coordinate of the foreign object
         ///
         /// Default value: 0
-        public let x: Double?
+        public let x: W3C_SVG2.X?
 
         /// The y-coordinate of the foreign object
         ///
         /// Default value: 0
-        public let y: Double?
+        public let y: W3C_SVG2.Y?
 
         /// The width of the viewport for foreign content
         ///
         /// A negative value is an error.
-        public let width: Double?
+        public let width: W3C_SVG2.Width?
 
         /// The height of the viewport for foreign content
         ///
         /// A negative value is an error.
-        public let height: Double?
+        public let height: W3C_SVG2.Height?
 
         /// Creates a foreignObject element
         ///
@@ -78,10 +78,10 @@ extension W3C_SVG2.Embedded {
         ///   - width: The width (default: nil)
         ///   - height: The height (default: nil)
         public init(
-            x: Double? = nil,
-            y: Double? = nil,
-            width: Double? = nil,
-            height: Double? = nil
+            x: W3C_SVG2.X? = nil,
+            y: W3C_SVG2.Y? = nil,
+            width: W3C_SVG2.Width? = nil,
+            height: W3C_SVG2.Height? = nil
         ) {
             self.x = x
             self.y = y

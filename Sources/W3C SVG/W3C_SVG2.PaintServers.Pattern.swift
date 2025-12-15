@@ -58,22 +58,22 @@ extension W3C_SVG2.PaintServers {
         /// X-coordinate of reference rectangle origin
         ///
         /// Default value: 0
-        public let x: Double?
+        public let x: W3C_SVG2.X?
 
         /// Y-coordinate of reference rectangle origin
         ///
         /// Default value: 0
-        public let y: Double?
+        public let y: W3C_SVG2.Y?
 
         /// Tile width
         ///
         /// Default value: 0 (zero disables rendering)
-        public let width: Double?
+        public let width: W3C_SVG2.Width?
 
         /// Tile height
         ///
         /// Default value: 0 (zero disables rendering)
-        public let height: Double?
+        public let height: W3C_SVG2.Height?
 
         /// The viewBox defining the coordinate system for pattern content
         public let viewBox: W3C_SVG2.Types.ViewBox?
@@ -127,10 +127,10 @@ extension W3C_SVG2.PaintServers {
         ///   - preserveAspectRatio: Aspect ratio control (default: nil)
         public init(
             id: String? = nil,
-            x: Double? = nil,
-            y: Double? = nil,
-            width: Double? = nil,
-            height: Double? = nil,
+            x: W3C_SVG2.X? = nil,
+            y: W3C_SVG2.Y? = nil,
+            width: W3C_SVG2.Width? = nil,
+            height: W3C_SVG2.Height? = nil,
             viewBox: W3C_SVG2.Types.ViewBox? = nil,
             href: String? = nil,
             patternUnits: Units? = nil,

@@ -62,23 +62,23 @@ extension W3C_SVG2.Document {
         ///
         /// Default value: 0
         /// New in SVG 2
-        public let x: Double?
+        public let x: W3C_SVG2.X?
 
         /// Y-coordinate offset
         ///
         /// Default value: 0
         /// New in SVG 2
-        public let y: Double?
+        public let y: W3C_SVG2.Y?
 
         /// Symbol width
         ///
         /// New in SVG 2
-        public let width: Double?
+        public let width: W3C_SVG2.Width?
 
         /// Symbol height
         ///
         /// New in SVG 2
-        public let height: Double?
+        public let height: W3C_SVG2.Height?
 
         /// The viewBox defining the coordinate system
         public let viewBox: W3C_SVG2.Types.ViewBox?
@@ -87,13 +87,13 @@ extension W3C_SVG2.Document {
         ///
         /// Can be a length or keyword (left, center, right)
         /// Default value: 0
-        public let refX: Double?
+        public let refX: W3C_SVG2.X?
 
         /// Reference Y coordinate for alignment
         ///
         /// Can be a length or keyword (top, center, bottom)
         /// Default value: 0
-        public let refY: Double?
+        public let refY: W3C_SVG2.Y?
 
         /// Controls aspect ratio preservation
         public let preserveAspectRatio: String?
@@ -112,13 +112,13 @@ extension W3C_SVG2.Document {
         ///   - preserveAspectRatio: Aspect ratio control (default: nil)
         public init(
             id: String? = nil,
-            x: Double? = nil,
-            y: Double? = nil,
-            width: Double? = nil,
-            height: Double? = nil,
+            x: W3C_SVG2.X? = nil,
+            y: W3C_SVG2.Y? = nil,
+            width: W3C_SVG2.Width? = nil,
+            height: W3C_SVG2.Height? = nil,
             viewBox: W3C_SVG2.Types.ViewBox? = nil,
-            refX: Double? = nil,
-            refY: Double? = nil,
+            refX: W3C_SVG2.X? = nil,
+            refY: W3C_SVG2.Y? = nil,
             preserveAspectRatio: String? = nil
         ) {
             self.id = id

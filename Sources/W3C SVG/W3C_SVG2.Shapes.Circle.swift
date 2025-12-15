@@ -35,18 +35,18 @@ extension W3C_SVG2.Shapes {
         /// The x-axis coordinate of the center of the circle
         ///
         /// Default value: 0
-        public let cx: Double?
+        public let cx: W3C_SVG2.X?
 
         /// The y-axis coordinate of the center of the circle
         ///
         /// Default value: 0
-        public let cy: Double?
+        public let cy: W3C_SVG2.Y?
 
         /// The radius of the circle
         ///
         /// A negative value is an error. A value of zero disables rendering.
         /// Default value: 0
-        public let r: Double?
+        public let r: W3C_SVG2.Radius?
 
         /// Creates a circle element
         ///
@@ -54,7 +54,11 @@ extension W3C_SVG2.Shapes {
         ///   - cx: The x-axis coordinate of the center (default: nil, uses 0)
         ///   - cy: The y-axis coordinate of the center (default: nil, uses 0)
         ///   - r: The radius (default: nil, uses 0)
-        public init(cx: Double? = nil, cy: Double? = nil, r: Double? = nil) {
+        public init(
+            cx: W3C_SVG2.X? = nil,
+            cy: W3C_SVG2.Y? = nil,
+            r: W3C_SVG2.Radius? = nil
+        ) {
             self.cx = cx
             self.cy = cy
             self.r = r

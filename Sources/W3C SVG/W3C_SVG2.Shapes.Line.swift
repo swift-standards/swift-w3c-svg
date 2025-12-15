@@ -27,16 +27,16 @@ extension W3C_SVG2.Shapes {
     /// ```
     public struct Line: SVGElementType, Sendable, Equatable {
         /// The x-coordinate of the start point
-        public let x1: Double?
+        public let x1: W3C_SVG2.X?
 
         /// The y-coordinate of the start point
-        public let y1: Double?
+        public let y1: W3C_SVG2.Y?
 
         /// The x-coordinate of the end point
-        public let x2: Double?
+        public let x2: W3C_SVG2.X?
 
         /// The y-coordinate of the end point
-        public let y2: Double?
+        public let y2: W3C_SVG2.Y?
 
         /// Creates a line element
         ///
@@ -46,10 +46,10 @@ extension W3C_SVG2.Shapes {
         ///   - x2: The x-coordinate of the end point (default: nil, uses 0)
         ///   - y2: The y-coordinate of the end point (default: nil, uses 0)
         public init(
-            x1: Double? = nil,
-            y1: Double? = nil,
-            x2: Double? = nil,
-            y2: Double? = nil
+            x1: W3C_SVG2.X? = nil,
+            y1: W3C_SVG2.Y? = nil,
+            x2: W3C_SVG2.X? = nil,
+            y2: W3C_SVG2.Y? = nil
         ) {
             self.x1 = x1
             self.y1 = y1
