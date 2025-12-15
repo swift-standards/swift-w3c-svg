@@ -100,44 +100,6 @@ extension W3C_SVG2.Paths.Path.Command {
             self.end = end
         }
 
-        /// Convert to a `Geometry.Ellipse.Arc` for proper geometric operations.
-        ///
-        /// - Parameter from: The starting point of the arc
-        /// - Returns: The elliptical arc in center parameterization
-        public func toEllipseArc(from: W3C_SVG2.Point<W3C_SVG.Space>) -> W3C_SVG2.Ellipse<W3C_SVG.Space>.Arc {
-            // Convert degrees to radians for rotation
-            let rotationRadians = Radian(xAxisRotation * .pi / 180)
-
-            return W3C_SVG2.Ellipse<W3C_SVG.Space>.Arc(
-                from: from,
-                to: end,
-                rx: W3C_SVG2.SVGSpace.Length(rx),
-                ry: W3C_SVG2.SVGSpace.Length(ry),
-                xAxisRotation: rotationRadians,
-                largeArcFlag: largeArcFlag,
-                sweepFlag: sweepFlag
-            )
-        }
-
-        /// Convert the arc command to Bezier curves.
-        ///
-        /// - Parameter from: The starting point of the arc
-        /// - Returns: Array of Bezier curves approximating the arc
-        public func toBeziers(from: W3C_SVG2.Point<W3C_SVG.Space>) -> [W3C_SVG2.Bezier<W3C_SVG.Space>] {
-            // Handle degenerate cases
-            guard rx > 0 && ry > 0 else {
-                return [.linear(from: from, to: end)]
-            }
-
-            // If endpoints are the same, no arc needed
-            if from == end {
-                return []
-            }
-
-            // Convert to Geometry.Ellipse.Arc and use its bezier conversion
-            let ellipseArc = toEllipseArc(from: from)
-            return [W3C_SVG2.Bezier<W3C_SVG.Space>](ellipticalArc: ellipseArc)
-        }
     }
 }
 

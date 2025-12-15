@@ -167,7 +167,7 @@ extension W3C_SVG2.Paths.Path {
 
                 case .arc(let arcCmd):
                     // Convert SVG arc command to Geometry.Ellipse.Arc segment
-                    let ellipseArc = arcCmd.toEllipseArc(from: currentPoint)
+                    let ellipseArc = W3C_SVG2.Ellipse<W3C_SVG.Space>.Arc(svgArc: arcCmd, from: currentPoint)
                     currentSegments.append(.ellipticalArc(ellipseArc))
                     currentPoint = arcCmd.end
                     lastControlPoint = nil
