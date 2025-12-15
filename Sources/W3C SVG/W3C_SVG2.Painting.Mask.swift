@@ -73,18 +73,18 @@ extension W3C_SVG2.Painting {
         /// Coordinate system for mask geometry (x, y, width, height)
         ///
         /// Default value: objectBoundingBox
-        public let maskUnits: MaskUnits?
+        public let maskUnits: Units?
 
         /// Coordinate system for mask contents
         ///
         /// Default value: userSpaceOnUse
-        public let maskContentUnits: MaskUnits?
+        public let maskContentUnits: Units?
 
         /// Coordinate system for mask geometry
         ///
         /// W3C SVG 2 Section 14.4.2
         /// https://www.w3.org/TR/SVG2/masking.html#MaskElementMaskUnitsAttribute
-        public enum MaskUnits: String, Sendable, Equatable {
+        public enum Units: String, Sendable, Equatable {
             /// Coordinate system established by user space
             case userSpaceOnUse
 
@@ -108,8 +108,8 @@ extension W3C_SVG2.Painting {
             y: Double? = nil,
             width: Double? = nil,
             height: Double? = nil,
-            maskUnits: MaskUnits? = nil,
-            maskContentUnits: MaskUnits? = nil
+            maskUnits: Units? = nil,
+            maskContentUnits: Units? = nil
         ) {
             self.id = id
             self.x = x

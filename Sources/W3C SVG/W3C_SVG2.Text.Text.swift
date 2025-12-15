@@ -57,7 +57,7 @@ extension W3C_SVG2.Text {
         ///
         /// W3C SVG 2 Section 11.7.3
         /// https://www.w3.org/TR/SVG2/text.html#TextElementLengthAdjustAttribute
-        public enum TextLengthAdjust: String, Sendable, Equatable {
+        public enum LengthAdjust: String, Sendable, Equatable {
             /// Adjust spacing between glyphs
             case spacing
 

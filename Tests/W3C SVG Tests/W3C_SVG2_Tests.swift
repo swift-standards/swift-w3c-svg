@@ -536,8 +536,8 @@ struct W3C_SVG2_Tests {
 
         @Test("ClipPath units")
         func clipPathUnits() {
-            let userSpace = W3C_SVG2.Painting.ClipPath.ClipPathUnits.userSpaceOnUse
-            let objectBBox = W3C_SVG2.Painting.ClipPath.ClipPathUnits.objectBoundingBox
+            let userSpace = W3C_SVG2.Painting.ClipPath.Units.userSpaceOnUse
+            let objectBBox = W3C_SVG2.Painting.ClipPath.Units.objectBoundingBox
             #expect(userSpace.rawValue == "userSpaceOnUse")
             #expect(objectBBox.rawValue == "objectBoundingBox")
         }
@@ -568,8 +568,8 @@ struct W3C_SVG2_Tests {
 
         @Test("Mask units")
         func maskUnits() {
-            let userSpace = W3C_SVG2.Painting.Mask.MaskUnits.userSpaceOnUse
-            let objectBBox = W3C_SVG2.Painting.Mask.MaskUnits.objectBoundingBox
+            let userSpace = W3C_SVG2.Painting.Mask.Units.userSpaceOnUse
+            let objectBBox = W3C_SVG2.Painting.Mask.Units.objectBoundingBox
             #expect(userSpace.rawValue == "userSpaceOnUse")
             #expect(objectBBox.rawValue == "objectBoundingBox")
         }
@@ -603,8 +603,8 @@ struct W3C_SVG2_Tests {
 
         @Test("Marker units")
         func markerUnits() {
-            let strokeWidth = W3C_SVG2.Painting.Marker.MarkerUnits.strokeWidth
-            let userSpace = W3C_SVG2.Painting.Marker.MarkerUnits.userSpaceOnUse
+            let strokeWidth = W3C_SVG2.Painting.Marker.Units.strokeWidth
+            let userSpace = W3C_SVG2.Painting.Marker.Units.userSpaceOnUse
             #expect(strokeWidth.rawValue == "strokeWidth")
             #expect(userSpace.rawValue == "userSpaceOnUse")
         }
@@ -642,10 +642,10 @@ struct W3C_SVG2_Tests {
             #expect(text.dy == 10)
         }
 
-        @Test("TextLengthAdjust enum")
+        @Test("LengthAdjust enum")
         func textLengthAdjust() {
-            let spacing = W3C_SVG2.Text.Text.TextLengthAdjust.spacing
-            let spacingAndGlyphs = W3C_SVG2.Text.Text.TextLengthAdjust.spacingAndGlyphs
+            let spacing = W3C_SVG2.Text.Text.LengthAdjust.spacing
+            let spacingAndGlyphs = W3C_SVG2.Text.Text.LengthAdjust.spacingAndGlyphs
             #expect(spacing.rawValue == "spacing")
             #expect(spacingAndGlyphs.rawValue == "spacingAndGlyphs")
         }
@@ -716,10 +716,10 @@ struct W3C_SVG2_Tests {
             #expect(repeat_.rawValue == "repeat")
         }
 
-        @Test("Pattern PatternUnits")
+        @Test("Pattern Units")
         func patternUnits() {
-            let userSpace = W3C_SVG2.PaintServers.Pattern.PatternUnits.userSpaceOnUse
-            let objectBBox = W3C_SVG2.PaintServers.Pattern.PatternUnits.objectBoundingBox
+            let userSpace = W3C_SVG2.PaintServers.Pattern.Units.userSpaceOnUse
+            let objectBBox = W3C_SVG2.PaintServers.Pattern.Units.objectBoundingBox
             #expect(userSpace.rawValue == "userSpaceOnUse")
             #expect(objectBBox.rawValue == "objectBoundingBox")
         }

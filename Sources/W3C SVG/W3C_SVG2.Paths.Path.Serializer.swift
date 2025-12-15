@@ -1,5 +1,5 @@
 //
-//  W3C_SVG2.Paths.PathSerializer.swift
+//  W3C_SVG2.Paths.Path.Serializer.swift
 //  swift-w3c-svg
 //
 //  Serialize Geometry.Path to SVG path data (SVG 2 Section 9)
@@ -8,7 +8,7 @@
 import Formatting
 internal import Geometry
 
-extension W3C_SVG2.Paths {
+extension W3C_SVG2.Paths.Path {
     /// Serializer for converting Geometry.Path to SVG path data strings.
     ///
     /// W3C SVG 2 Section 9.3
@@ -17,10 +17,10 @@ extension W3C_SVG2.Paths {
     /// ## Example
     ///
     /// ```swift
-    /// let d = PathSerializer.serialize(path)
+    /// let d = Path.Serializer.serialize(path)
     /// // Returns: "M 100 100 L 200 100 L 200 200 Z"
     /// ```
-    public struct PathSerializer {
+    public struct Serializer {
         /// Serialize a Geometry.Path to SVG path data string.
         ///
         /// - Parameter path: The path geometry to serialize

@@ -1,20 +1,22 @@
 //
-//  W3C_SVG2.Paths.PathCommand.swift
+//  W3C_SVG2.Paths.Path.Command.swift
 //  swift-w3c-svg
 //
 //  SVG path commands (SVG 2 Section 9)
 //
 
+import Formatting
 public import Geometry
 
-extension W3C_SVG2.Paths {
+extension W3C_SVG2.Paths.Path {
     /// SVG path command
     ///
     /// W3C SVG 2 Section 9.3
     /// https://www.w3.org/TR/SVG2/paths.html#PathData
     ///
     /// Represents a single path command in absolute coordinates.
-    public enum PathCommand: Sendable, Equatable {
+    /// Used as an intermediate representation for parsing and serialization.
+    public enum Command: Sendable, Equatable {
         /// Move to point (M)
         case moveTo(W3C_SVG2.Point<W3C_SVG.Space>)
 
@@ -40,17 +42,21 @@ extension W3C_SVG2.Paths {
         case smoothQuadraticBezier(end: W3C_SVG2.Point<W3C_SVG.Space>)
 
         /// Elliptical arc (A)
-        case arc(ArcCommand)
+        case arc(Arc)
 
         /// Close path (Z)
         case closePath
     }
+}
 
+// MARK: - Command.Arc
+
+extension W3C_SVG2.Paths.Path.Command {
     /// Elliptical arc command parameters
     ///
     /// W3C SVG 2 Section 9.5.1
     /// https://www.w3.org/TR/SVG2/paths.html#PathDataEllipticalArcCommands
-    public struct ArcCommand: Sendable, Equatable {
+    public struct Arc: Sendable, Equatable {
         /// X radius of the ellipse
         public var rx: Double
 
@@ -116,6 +122,50 @@ extension W3C_SVG2.Paths {
 
             // Simple quadratic approximation through midpoint
             return [W3C_SVG2.Bezier<W3C_SVG.Space>.quadratic(from: from, control: midPoint, to: end)]
+        }
+    }
+}
+
+// MARK: - Command Serialization
+
+extension W3C_SVG2.Paths.Path.Command: CustomStringConvertible {
+    public var description: String {
+        switch self {
+        case .moveTo(let point):
+            return "M \(point.x._rawValue.formatted(.number)) \(point.y._rawValue.formatted(.number))"
+
+        case .lineTo(let point):
+            return "L \(point.x._rawValue.formatted(.number)) \(point.y._rawValue.formatted(.number))"
+
+        case .horizontalLineTo(let x):
+            return "H \(x._rawValue.formatted(.number))"
+
+        case .verticalLineTo(let y):
+            return "V \(y._rawValue.formatted(.number))"
+
+        case .cubicBezier(let bezier):
+            guard bezier.controlPoints.count >= 4 else { return "" }
+            let c1 = bezier.controlPoints[1]
+            let c2 = bezier.controlPoints[2]
+            let end = bezier.controlPoints[3]
+            return "C \(c1.x._rawValue.formatted(.number)) \(c1.y._rawValue.formatted(.number)) \(c2.x._rawValue.formatted(.number)) \(c2.y._rawValue.formatted(.number)) \(end.x._rawValue.formatted(.number)) \(end.y._rawValue.formatted(.number))"
+
+        case .smoothCubicBezier(let control2, let end):
+            return "S \(control2.x._rawValue.formatted(.number)) \(control2.y._rawValue.formatted(.number)) \(end.x._rawValue.formatted(.number)) \(end.y._rawValue.formatted(.number))"
+
+        case .quadraticBezier(let control, let end):
+            return "Q \(control.x._rawValue.formatted(.number)) \(control.y._rawValue.formatted(.number)) \(end.x._rawValue.formatted(.number)) \(end.y._rawValue.formatted(.number))"
+
+        case .smoothQuadraticBezier(let end):
+            return "T \(end.x._rawValue.formatted(.number)) \(end.y._rawValue.formatted(.number))"
+
+        case .arc(let arc):
+            let largeArc = arc.largeArcFlag ? "1" : "0"
+            let sweep = arc.sweepFlag ? "1" : "0"
+            return "A \(arc.rx.formatted(.number)) \(arc.ry.formatted(.number)) \(arc.xAxisRotation.formatted(.number)) \(largeArc) \(sweep) \(arc.end.x._rawValue.formatted(.number)) \(arc.end.y._rawValue.formatted(.number))"
+
+        case .closePath:
+            return "Z"
         }
     }
 }

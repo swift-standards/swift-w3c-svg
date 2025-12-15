@@ -86,12 +86,12 @@ extension W3C_SVG2.PaintServers {
         /// Coordinate system for pattern geometry (x, y, width, height)
         ///
         /// Default value: objectBoundingBox
-        public let patternUnits: PatternUnits?
+        public let patternUnits: Units?
 
         /// Coordinate system for pattern contents
         ///
         /// Default value: userSpaceOnUse
-        public let patternContentUnits: PatternUnits?
+        public let patternContentUnits: Units?
 
         /// Transform to apply to pattern coordinate system
         public let patternTransform: String?
@@ -103,7 +103,7 @@ extension W3C_SVG2.PaintServers {
         ///
         /// W3C SVG 2 Section 14.3.2
         /// https://www.w3.org/TR/SVG2/pservers.html#PatternElementPatternUnitsAttribute
-        public enum PatternUnits: String, Sendable, Equatable {
+        public enum Units: String, Sendable, Equatable {
             /// Coordinate system established by user space
             case userSpaceOnUse
 
@@ -133,8 +133,8 @@ extension W3C_SVG2.PaintServers {
             height: Double? = nil,
             viewBox: W3C_SVG2.Types.ViewBox? = nil,
             href: String? = nil,
-            patternUnits: PatternUnits? = nil,
-            patternContentUnits: PatternUnits? = nil,
+            patternUnits: Units? = nil,
+            patternContentUnits: Units? = nil,
             patternTransform: String? = nil,
             preserveAspectRatio: String? = nil
         ) {

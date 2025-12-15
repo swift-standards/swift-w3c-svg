@@ -80,7 +80,7 @@ extension W3C_SVG2.Painting {
         /// Coordinate system for markerWidth and markerHeight
         ///
         /// Default value: strokeWidth
-        public let markerUnits: MarkerUnits?
+        public let markerUnits: Units?
 
         /// Controls aspect ratio preservation
         public let preserveAspectRatio: String?
@@ -89,7 +89,7 @@ extension W3C_SVG2.Painting {
         ///
         /// W3C SVG 2 Section 13.6.2
         /// https://www.w3.org/TR/SVG2/painting.html#MarkerUnitsAttribute
-        public enum MarkerUnits: String, Sendable, Equatable {
+        public enum Units: String, Sendable, Equatable {
             /// Marker size relative to stroke width
             case strokeWidth
 
@@ -117,7 +117,7 @@ extension W3C_SVG2.Painting {
             markerWidth: Double? = nil,
             markerHeight: Double? = nil,
             orient: String? = nil,
-            markerUnits: MarkerUnits? = nil,
+            markerUnits: Units? = nil,
             preserveAspectRatio: String? = nil
         ) {
             self.id = id

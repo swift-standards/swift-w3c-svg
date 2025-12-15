@@ -1,5 +1,5 @@
 //
-//  W3C_SVG2.Paths.PathParser.swift
+//  W3C_SVG2.Paths.Path.Parser.swift
 //  swift-w3c-svg
 //
 //  SVG path data parser (SVG 2 Section 9)
@@ -8,7 +8,7 @@
 import Foundation
 internal import Geometry
 
-extension W3C_SVG2.Paths {
+extension W3C_SVG2.Paths.Path {
     /// Parser for SVG path data strings.
     ///
     /// W3C SVG 2 Section 9.3
@@ -32,16 +32,16 @@ extension W3C_SVG2.Paths {
     /// ## Example
     ///
     /// ```swift
-    /// let path = PathParser.parse("M 100 100 L 200 100 L 200 200 Z")
+    /// let path = Path.Parser.parse("M 100 100 L 200 100 L 200 200 Z")
     /// // Returns: PathGeometry with one closed subpath
     /// ```
-    public struct PathParser {
+    public struct Parser {
         /// Parse an SVG path data string into a Geometry.Path.
         ///
         /// - Parameter pathData: The path data string (d attribute value)
         /// - Returns: The parsed path geometry
         public static func parse(_ pathData: String) -> W3C_SVG2.PathGeometry<W3C_SVG.Space> {
-            var parser = PathParser(pathData)
+            var parser = Parser(pathData)
             let commands = parser.parseCommands()
             return convertToGeometry(commands)
         }
@@ -50,8 +50,8 @@ extension W3C_SVG2.Paths {
         ///
         /// - Parameter pathData: The path data string (d attribute value)
         /// - Returns: Array of parsed path commands
-        public static func parseToCommands(_ pathData: String) -> [PathCommand] {
-            var parser = PathParser(pathData)
+        public static func parseToCommands(_ pathData: String) -> [Command] {
+            var parser = Parser(pathData)
             return parser.parseCommands()
         }
 
@@ -60,7 +60,7 @@ extension W3C_SVG2.Paths {
         /// Handles smooth curves (S, T) by computing reflected control points,
         /// and converts SVG elliptical arcs to Bezier curves.
         private static func convertToGeometry(
-            _ commands: [PathCommand]
+            _ commands: [Command]
         ) -> W3C_SVG2.PathGeometry<W3C_SVG.Space> {
             typealias Point = W3C_SVG2.Point<W3C_SVG.Space>
             typealias Segment = W3C_SVG2.PathGeometry<W3C_SVG.Space>.Segment
@@ -198,8 +198,8 @@ extension W3C_SVG2.Paths {
             self.index = input.startIndex
         }
 
-        private mutating func parseCommands() -> [PathCommand] {
-            var commands: [PathCommand] = []
+        private mutating func parseCommands() -> [Command] {
+            var commands: [Command] = []
 
             while index < input.endIndex {
                 skipWhitespaceAndCommas()
@@ -245,7 +245,7 @@ extension W3C_SVG2.Paths {
 
         // MARK: - Command Parsers
 
-        private mutating func parseMoveTo(isRelative: Bool, commands: inout [PathCommand]) {
+        private mutating func parseMoveTo(isRelative: Bool, commands: inout [Command]) {
             var isFirst = true
             while let point = parsePoint(isRelative: isRelative) {
                 if isFirst {
@@ -261,7 +261,7 @@ extension W3C_SVG2.Paths {
             }
         }
 
-        private mutating func parseLineTo(isRelative: Bool, commands: inout [PathCommand]) {
+        private mutating func parseLineTo(isRelative: Bool, commands: inout [Command]) {
             while let point = parsePoint(isRelative: isRelative) {
                 commands.append(.lineTo(point))
                 currentPoint = point
@@ -269,7 +269,7 @@ extension W3C_SVG2.Paths {
             }
         }
 
-        private mutating func parseHorizontalLineTo(isRelative: Bool, commands: inout [PathCommand]) {
+        private mutating func parseHorizontalLineTo(isRelative: Bool, commands: inout [Command]) {
             while let x = parseNumber() {
                 let newX: W3C_SVG2.SVGSpace.X = isRelative
                     ? currentPoint.x + W3C_SVG2.SVGSpace.Dx(x)
@@ -280,7 +280,7 @@ extension W3C_SVG2.Paths {
             }
         }
 
-        private mutating func parseVerticalLineTo(isRelative: Bool, commands: inout [PathCommand]) {
+        private mutating func parseVerticalLineTo(isRelative: Bool, commands: inout [Command]) {
             while let y = parseNumber() {
                 let newY: W3C_SVG2.SVGSpace.Y = isRelative
                     ? currentPoint.y + W3C_SVG2.SVGSpace.Dy(y)
@@ -291,7 +291,7 @@ extension W3C_SVG2.Paths {
             }
         }
 
-        private mutating func parseCubicBezier(isRelative: Bool, commands: inout [PathCommand]) {
+        private mutating func parseCubicBezier(isRelative: Bool, commands: inout [Command]) {
             while let control1 = parsePoint(isRelative: isRelative),
                 let control2 = parsePoint(isRelative: isRelative),
                 let end = parsePoint(isRelative: isRelative)
@@ -310,7 +310,7 @@ extension W3C_SVG2.Paths {
 
         private mutating func parseSmoothCubicBezier(
             isRelative: Bool,
-            commands: inout [PathCommand]
+            commands: inout [Command]
         ) {
             while let control2 = parsePoint(isRelative: isRelative),
                 let end = parsePoint(isRelative: isRelative)
@@ -321,7 +321,7 @@ extension W3C_SVG2.Paths {
             }
         }
 
-        private mutating func parseQuadraticBezier(isRelative: Bool, commands: inout [PathCommand]) {
+        private mutating func parseQuadraticBezier(isRelative: Bool, commands: inout [Command]) {
             while let control = parsePoint(isRelative: isRelative),
                 let end = parsePoint(isRelative: isRelative)
             {
@@ -333,7 +333,7 @@ extension W3C_SVG2.Paths {
 
         private mutating func parseSmoothQuadraticBezier(
             isRelative: Bool,
-            commands: inout [PathCommand]
+            commands: inout [Command]
         ) {
             while let end = parsePoint(isRelative: isRelative) {
                 commands.append(.smoothQuadraticBezier(end: end))
@@ -350,7 +350,7 @@ extension W3C_SVG2.Paths {
             }
         }
 
-        private mutating func parseArc(isRelative: Bool, commands: inout [PathCommand]) {
+        private mutating func parseArc(isRelative: Bool, commands: inout [Command]) {
             while let rx = parseNumber(),
                 let ry = parseNumber(),
                 let rotation = parseNumber(),
@@ -358,7 +358,7 @@ extension W3C_SVG2.Paths {
                 let sweep = parseFlag(),
                 let end = parsePoint(isRelative: isRelative)
             {
-                let arcCmd = ArcCommand(
+                let arcCmd = Command.Arc(
                     rx: rx,
                     ry: ry,
                     xAxisRotation: rotation,

@@ -39,13 +39,13 @@ extension W3C_SVG2.Painting {
         /// Coordinate system for clip path geometry
         ///
         /// Default value: userSpaceOnUse
-        public let clipPathUnits: ClipPathUnits?
+        public let clipPathUnits: Units?
 
         /// Coordinate system for clip path geometry
         ///
         /// W3C SVG 2 Section 14.3.2
         /// https://www.w3.org/TR/SVG2/masking.html#ClipPathElementClipPathUnitsAttribute
-        public enum ClipPathUnits: String, Sendable, Equatable {
+        public enum Units: String, Sendable, Equatable {
             /// Coordinate system established by user space
             case userSpaceOnUse
 
@@ -60,7 +60,7 @@ extension W3C_SVG2.Painting {
         ///   - clipPathUnits: Coordinate system (default: nil, uses userSpaceOnUse)
         public init(
             id: String? = nil,
-            clipPathUnits: ClipPathUnits? = nil
+            clipPathUnits: Units? = nil
         ) {
             self.id = id
             self.clipPathUnits = clipPathUnits
