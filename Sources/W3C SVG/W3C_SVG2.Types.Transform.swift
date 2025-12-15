@@ -34,19 +34,19 @@ extension W3C_SVG2.Types {
     /// ```
     public enum Transform: Sendable, Equatable, CustomStringConvertible {
         /// Translate by (tx, ty)
-        case translate(x: Double, y: Double)
+        case translate(x: W3C_SVG2.Dx, y: W3C_SVG2.Dy)
 
         /// Rotate by angle (in degrees), optionally around point (cx, cy)
-        case rotate(angle: Double, cx: Double? = nil, cy: Double? = nil)
+        case rotate(angle: W3C_SVG2.Degrees, cx: W3C_SVG2.X? = nil, cy: W3C_SVG2.Y? = nil)
 
-        /// Scale by (sx, sy)
+        /// Scale by (sx, sy) - dimensionless scale factors
         case scale(x: Double, y: Double? = nil)
 
         /// Skew along x-axis by angle (in degrees)
-        case skewX(angle: Double)
+        case skewX(angle: W3C_SVG2.Degrees)
 
         /// Skew along y-axis by angle (in degrees)
-        case skewY(angle: Double)
+        case skewY(angle: W3C_SVG2.Degrees)
 
         /// Direct matrix transformation (a, b, c, d, e, f)
         case matrix(a: Double, b: Double, c: Double, d: Double, e: Double, f: Double)
@@ -55,13 +55,14 @@ extension W3C_SVG2.Types {
         public var description: String {
             switch self {
             case .translate(let x, let y):
-                return "translate(\(x.formatted(.number)) \(y.formatted(.number)))"
+                return
+                    "translate(\(x._rawValue.formatted(.number)) \(y._rawValue.formatted(.number)))"
             case .rotate(let angle, let cx, let cy):
                 if let cx = cx, let cy = cy {
                     return
-                        "rotate(\(angle.formatted(.number)) \(cx.formatted(.number)) \(cy.formatted(.number)))"
+                        "rotate(\(angle._rawValue.formatted(.number)) \(cx._rawValue.formatted(.number)) \(cy._rawValue.formatted(.number)))"
                 } else {
-                    return "rotate(\(angle.formatted(.number)))"
+                    return "rotate(\(angle._rawValue.formatted(.number)))"
                 }
             case .scale(let x, let y):
                 if let y = y {
@@ -70,9 +71,9 @@ extension W3C_SVG2.Types {
                     return "scale(\(x.formatted(.number)))"
                 }
             case .skewX(let angle):
-                return "skewX(\(angle.formatted(.number)))"
+                return "skewX(\(angle._rawValue.formatted(.number)))"
             case .skewY(let angle):
-                return "skewY(\(angle.formatted(.number)))"
+                return "skewY(\(angle._rawValue.formatted(.number)))"
             case .matrix(let a, let b, let c, let d, let e, let f):
                 return
                     "matrix(\(a.formatted(.number)) \(b.formatted(.number)) \(c.formatted(.number)) \(d.formatted(.number)) \(e.formatted(.number)) \(f.formatted(.number)))"

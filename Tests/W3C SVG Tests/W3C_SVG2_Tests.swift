@@ -692,10 +692,10 @@ struct W3C_SVG2_Tests {
         func linearGradientSpreadMethod() {
             let pad = W3C_SVG2.PaintServers.LinearGradient.SpreadMethod.pad
             let reflect = W3C_SVG2.PaintServers.LinearGradient.SpreadMethod.reflect
-            let repeat_ = W3C_SVG2.PaintServers.LinearGradient.SpreadMethod.repeat
+            let repeatSpread = W3C_SVG2.PaintServers.LinearGradient.SpreadMethod.repeat
             #expect(pad.rawValue == "pad")
             #expect(reflect.rawValue == "reflect")
-            #expect(repeat_.rawValue == "repeat")
+            #expect(repeatSpread.rawValue == "repeat")
         }
 
         @Test("RadialGradient GradientUnits")
@@ -710,10 +710,10 @@ struct W3C_SVG2_Tests {
         func radialGradientSpreadMethod() {
             let pad = W3C_SVG2.PaintServers.RadialGradient.SpreadMethod.pad
             let reflect = W3C_SVG2.PaintServers.RadialGradient.SpreadMethod.reflect
-            let repeat_ = W3C_SVG2.PaintServers.RadialGradient.SpreadMethod.repeat
+            let repeatSpread = W3C_SVG2.PaintServers.RadialGradient.SpreadMethod.repeat
             #expect(pad.rawValue == "pad")
             #expect(reflect.rawValue == "reflect")
-            #expect(repeat_.rawValue == "repeat")
+            #expect(repeatSpread.rawValue == "repeat")
         }
 
         @Test("Pattern Units")

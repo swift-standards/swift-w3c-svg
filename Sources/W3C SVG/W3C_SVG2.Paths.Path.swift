@@ -56,17 +56,29 @@ extension W3C_SVG2.Paths {
     /// - ``Serializer``
     public struct Path: SVGElementType, Sendable, Equatable {
         /// The underlying path geometry from swift-standards.
-        public var geometry: W3C_SVG2.PathGeometry<W3C_SVG.Space>
+        public var geometry: W3C_SVG2.PathGeometry<W3C_SVG.Space> {
+            didSet {
+                _originalPathData = nil
+            }
+        }
 
         /// The fill rule for determining path interior
         ///
         /// Default value: nonzero
         public var fillRule: W3C_SVG2.Painting.FillRule?
 
-        /// The path data string (serialized from geometry).
+        /// The original path data string, if created from a string.
+        /// Invalidated when geometry is modified.
+        private var _originalPathData: String?
+
+        /// The path data string.
         ///
-        /// Returns a serialized version of the path in SVG path data format.
+        /// Returns the original string if created from a string and unmodified,
+        /// otherwise serializes from geometry.
         public var d: String? {
+            if let original = _originalPathData {
+                return original
+            }
             guard !geometry.isEmpty else { return nil }
             return Serializer.serialize(geometry)
         }
@@ -79,8 +91,10 @@ extension W3C_SVG2.Paths {
         public init(d: String? = nil, fillRule: W3C_SVG2.Painting.FillRule? = nil) {
             if let d = d {
                 self.geometry = Parser.parse(d)
+                self._originalPathData = d
             } else {
                 self.geometry = .init(subpaths: [])
+                self._originalPathData = nil
             }
             self.fillRule = fillRule
         }
@@ -95,6 +109,7 @@ extension W3C_SVG2.Paths {
             fillRule: W3C_SVG2.Painting.FillRule? = nil
         ) {
             self.geometry = geometry
+            self._originalPathData = nil
             self.fillRule = fillRule
         }
 

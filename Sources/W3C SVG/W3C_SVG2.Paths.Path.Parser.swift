@@ -74,11 +74,13 @@ extension W3C_SVG2.Paths.Path {
 
             func finishSubpath(closed: Bool) {
                 guard !currentSegments.isEmpty || closed else { return }
-                subpaths.append(Subpath(
-                    startPoint: subpathStart,
-                    segments: currentSegments,
-                    isClosed: closed
-                ))
+                subpaths.append(
+                    Subpath(
+                        startPoint: subpathStart,
+                        segments: currentSegments,
+                        isClosed: closed
+                    )
+                )
                 currentSegments = []
             }
 
@@ -167,7 +169,10 @@ extension W3C_SVG2.Paths.Path {
 
                 case .arc(let arcCmd):
                     // Convert SVG arc command to Geometry.Ellipse.Arc segment
-                    let ellipseArc = W3C_SVG2.Ellipse<W3C_SVG.Space>.Arc(svgArc: arcCmd, from: currentPoint)
+                    let ellipseArc = W3C_SVG2.Ellipse<W3C_SVG.Space>.Arc(
+                        svgArc: arcCmd,
+                        from: currentPoint
+                    )
                     currentSegments.append(.ellipticalArc(ellipseArc))
                     currentPoint = arcCmd.end
                     lastControlPoint = nil
@@ -269,7 +274,8 @@ extension W3C_SVG2.Paths.Path {
 
         private mutating func parseHorizontalLineTo(isRelative: Bool, commands: inout [Command]) {
             while let x = parseNumber() {
-                let newX: W3C_SVG2.SVGSpace.X = isRelative
+                let newX: W3C_SVG2.SVGSpace.X =
+                    isRelative
                     ? currentPoint.x + W3C_SVG2.SVGSpace.Dx(x)
                     : W3C_SVG2.SVGSpace.X(x)
                 commands.append(.horizontalLineTo(x: newX))
@@ -280,7 +286,8 @@ extension W3C_SVG2.Paths.Path {
 
         private mutating func parseVerticalLineTo(isRelative: Bool, commands: inout [Command]) {
             while let y = parseNumber() {
-                let newY: W3C_SVG2.SVGSpace.Y = isRelative
+                let newY: W3C_SVG2.SVGSpace.Y =
+                    isRelative
                     ? currentPoint.y + W3C_SVG2.SVGSpace.Dy(y)
                     : W3C_SVG2.SVGSpace.Y(y)
                 commands.append(.verticalLineTo(y: newY))

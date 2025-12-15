@@ -90,4 +90,7 @@ extension W3C_SVG2 {
 
     /// Radius in SVG space
     public typealias Radius = SVGSpace.Radius
+
+    /// Angle in degrees (for transforms and rotations)
+    public typealias Degrees = Degree<Double>
 }

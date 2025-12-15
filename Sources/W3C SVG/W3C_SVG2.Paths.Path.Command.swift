@@ -33,10 +33,16 @@ extension W3C_SVG2.Paths.Path {
         case cubicBezier(W3C_SVG2.Bezier<W3C_SVG.Space>)
 
         /// Smooth cubic Bezier curve (S)
-        case smoothCubicBezier(control2: W3C_SVG2.Point<W3C_SVG.Space>, end: W3C_SVG2.Point<W3C_SVG.Space>)
+        case smoothCubicBezier(
+            control2: W3C_SVG2.Point<W3C_SVG.Space>,
+            end: W3C_SVG2.Point<W3C_SVG.Space>
+        )
 
         /// Quadratic Bezier curve (Q)
-        case quadraticBezier(control: W3C_SVG2.Point<W3C_SVG.Space>, end: W3C_SVG2.Point<W3C_SVG.Space>)
+        case quadraticBezier(
+            control: W3C_SVG2.Point<W3C_SVG.Space>,
+            end: W3C_SVG2.Point<W3C_SVG.Space>
+        )
 
         /// Smooth quadratic Bezier curve (T)
         case smoothQuadraticBezier(end: W3C_SVG2.Point<W3C_SVG.Space>)
@@ -109,10 +115,12 @@ extension W3C_SVG2.Paths.Path.Command: CustomStringConvertible {
     public var description: String {
         switch self {
         case .moveTo(let point):
-            return "M \(point.x._rawValue.formatted(.number)) \(point.y._rawValue.formatted(.number))"
+            return
+                "M \(point.x._rawValue.formatted(.number)) \(point.y._rawValue.formatted(.number))"
 
         case .lineTo(let point):
-            return "L \(point.x._rawValue.formatted(.number)) \(point.y._rawValue.formatted(.number))"
+            return
+                "L \(point.x._rawValue.formatted(.number)) \(point.y._rawValue.formatted(.number))"
 
         case .horizontalLineTo(let x):
             return "H \(x._rawValue.formatted(.number))"
@@ -125,13 +133,16 @@ extension W3C_SVG2.Paths.Path.Command: CustomStringConvertible {
             let c1 = bezier.controlPoints[1]
             let c2 = bezier.controlPoints[2]
             let end = bezier.controlPoints[3]
-            return "C \(c1.x._rawValue.formatted(.number)) \(c1.y._rawValue.formatted(.number)) \(c2.x._rawValue.formatted(.number)) \(c2.y._rawValue.formatted(.number)) \(end.x._rawValue.formatted(.number)) \(end.y._rawValue.formatted(.number))"
+            return
+                "C \(c1.x._rawValue.formatted(.number)) \(c1.y._rawValue.formatted(.number)) \(c2.x._rawValue.formatted(.number)) \(c2.y._rawValue.formatted(.number)) \(end.x._rawValue.formatted(.number)) \(end.y._rawValue.formatted(.number))"
 
         case .smoothCubicBezier(let control2, let end):
-            return "S \(control2.x._rawValue.formatted(.number)) \(control2.y._rawValue.formatted(.number)) \(end.x._rawValue.formatted(.number)) \(end.y._rawValue.formatted(.number))"
+            return
+                "S \(control2.x._rawValue.formatted(.number)) \(control2.y._rawValue.formatted(.number)) \(end.x._rawValue.formatted(.number)) \(end.y._rawValue.formatted(.number))"
 
         case .quadraticBezier(let control, let end):
-            return "Q \(control.x._rawValue.formatted(.number)) \(control.y._rawValue.formatted(.number)) \(end.x._rawValue.formatted(.number)) \(end.y._rawValue.formatted(.number))"
+            return
+                "Q \(control.x._rawValue.formatted(.number)) \(control.y._rawValue.formatted(.number)) \(end.x._rawValue.formatted(.number)) \(end.y._rawValue.formatted(.number))"
 
         case .smoothQuadraticBezier(let end):
             return "T \(end.x._rawValue.formatted(.number)) \(end.y._rawValue.formatted(.number))"
@@ -139,7 +150,8 @@ extension W3C_SVG2.Paths.Path.Command: CustomStringConvertible {
         case .arc(let arc):
             let largeArc = arc.largeArcFlag ? "1" : "0"
             let sweep = arc.sweepFlag ? "1" : "0"
-            return "A \(arc.rx.formatted(.number)) \(arc.ry.formatted(.number)) \(arc.xAxisRotation.formatted(.number)) \(largeArc) \(sweep) \(arc.end.x._rawValue.formatted(.number)) \(arc.end.y._rawValue.formatted(.number))"
+            return
+                "A \(arc.rx.formatted(.number)) \(arc.ry.formatted(.number)) \(arc.xAxisRotation.formatted(.number)) \(largeArc) \(sweep) \(arc.end.x._rawValue.formatted(.number)) \(arc.end.y._rawValue.formatted(.number))"
 
         case .closePath:
             return "Z"

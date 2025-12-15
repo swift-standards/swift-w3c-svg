@@ -56,8 +56,10 @@ extension W3C_SVG2.Shapes {
         ///
         /// - Parameters:
         ///   - coordinates: Array of (x, y) coordinate tuples
-        public init(coordinates: [(Double, Double)]) {
-            self.points = coordinates.map { "\($0.0.formatted(.number)),\($0.1.formatted(.number))" }.joined(separator: " ")
+        public init(coordinates: [(W3C_SVG2.X, W3C_SVG2.Y)]) {
+            self.points = coordinates.map {
+                "\($0.0._rawValue.formatted(.number)),\($0.1._rawValue.formatted(.number))"
+            }.joined(separator: " ")
         }
 
         /// SVG element tag name

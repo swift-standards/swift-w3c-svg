@@ -27,16 +27,16 @@ extension W3C_SVG2.Types {
     /// ```
     public struct ViewBox: Sendable, Equatable, CustomStringConvertible {
         /// The minimum x-coordinate
-        public let minX: Double
+        public let minX: W3C_SVG2.X
 
         /// The minimum y-coordinate
-        public let minY: Double
+        public let minY: W3C_SVG2.Y
 
         /// The width of the viewport
-        public let width: Double
+        public let width: W3C_SVG2.Width
 
         /// The height of the viewport
-        public let height: Double
+        public let height: W3C_SVG2.Height
 
         /// Creates a viewBox value
         ///
@@ -46,10 +46,10 @@ extension W3C_SVG2.Types {
         ///   - width: Width of viewport
         ///   - height: Height of viewport
         public init(
-            minX: Double = 0,
-            minY: Double = 0,
-            width: Double,
-            height: Double
+            minX: W3C_SVG2.X = 0,
+            minY: W3C_SVG2.Y = 0,
+            width: W3C_SVG2.Width,
+            height: W3C_SVG2.Height
         ) {
             self.minX = minX
             self.minY = minY
@@ -59,7 +59,7 @@ extension W3C_SVG2.Types {
 
         /// String representation for SVG output
         public var description: String {
-            "\(minX.formatted(.number)) \(minY.formatted(.number)) \(width.formatted(.number)) \(height.formatted(.number))"
+            "\(minX._rawValue.formatted(.number)) \(minY._rawValue.formatted(.number)) \(width._rawValue.formatted(.number)) \(height._rawValue.formatted(.number))"
         }
     }
 }
