@@ -14,7 +14,7 @@ extension W3C_SVG2.Paths {
     /// W3C SVG 2 Section 9.3
     /// https://www.w3.org/TR/SVG2/paths.html#PathData
     ///
-    /// Parses SVG path data (the 'd' attribute) into a sequence of `PathCommand` values.
+    /// Parses SVG path data (the 'd' attribute) into `Geometry.Path`.
     ///
     /// ## Supported Commands
     ///
@@ -32,17 +32,159 @@ extension W3C_SVG2.Paths {
     /// ## Example
     ///
     /// ```swift
-    /// let commands = PathParser.parse("M 100 100 L 200 100 L 200 200 Z")
-    /// // Returns: [.moveTo(...), .lineTo(...), .lineTo(...), .closePath]
+    /// let path = PathParser.parse("M 100 100 L 200 100 L 200 200 Z")
+    /// // Returns: PathGeometry with one closed subpath
     /// ```
     public struct PathParser {
-        /// Parse an SVG path data string into commands.
+        /// Parse an SVG path data string into a Geometry.Path.
+        ///
+        /// - Parameter pathData: The path data string (d attribute value)
+        /// - Returns: The parsed path geometry
+        public static func parse(_ pathData: String) -> W3C_SVG2.PathGeometry<W3C_SVG.Space> {
+            var parser = PathParser(pathData)
+            let commands = parser.parseCommands()
+            return convertToGeometry(commands)
+        }
+
+        /// Parse an SVG path data string into commands (for serialization).
         ///
         /// - Parameter pathData: The path data string (d attribute value)
         /// - Returns: Array of parsed path commands
-        public static func parse(_ pathData: String) -> [PathCommand] {
+        public static func parseToCommands(_ pathData: String) -> [PathCommand] {
             var parser = PathParser(pathData)
             return parser.parseCommands()
+        }
+
+        /// Convert path commands to Geometry.Path.
+        ///
+        /// Handles smooth curves (S, T) by computing reflected control points,
+        /// and converts SVG elliptical arcs to Bezier curves.
+        private static func convertToGeometry(
+            _ commands: [PathCommand]
+        ) -> W3C_SVG2.PathGeometry<W3C_SVG.Space> {
+            typealias Point = W3C_SVG2.Point<W3C_SVG.Space>
+            typealias Segment = W3C_SVG2.PathGeometry<W3C_SVG.Space>.Segment
+            typealias Subpath = W3C_SVG2.PathGeometry<W3C_SVG.Space>.Subpath
+
+            var subpaths: [Subpath] = []
+            var currentSegments: [Segment] = []
+            var currentPoint: Point = .init(x: .init(0), y: .init(0))
+            var subpathStart: Point = currentPoint
+            var lastControlPoint: Point?
+
+            func finishSubpath(closed: Bool) {
+                guard !currentSegments.isEmpty || closed else { return }
+                subpaths.append(Subpath(
+                    startPoint: subpathStart,
+                    segments: currentSegments,
+                    isClosed: closed
+                ))
+                currentSegments = []
+            }
+
+            for command in commands {
+                switch command {
+                case .moveTo(let point):
+                    // Finish previous subpath (open)
+                    finishSubpath(closed: false)
+                    currentPoint = point
+                    subpathStart = point
+                    lastControlPoint = nil
+
+                case .lineTo(let point):
+                    currentSegments.append(.line(.init(start: currentPoint, end: point)))
+                    currentPoint = point
+                    lastControlPoint = nil
+
+                case .horizontalLineTo(let x):
+                    let point = Point(x: x, y: currentPoint.y)
+                    currentSegments.append(.line(.init(start: currentPoint, end: point)))
+                    currentPoint = point
+                    lastControlPoint = nil
+
+                case .verticalLineTo(let y):
+                    let point = Point(x: currentPoint.x, y: y)
+                    currentSegments.append(.line(.init(start: currentPoint, end: point)))
+                    currentPoint = point
+                    lastControlPoint = nil
+
+                case .cubicBezier(let bezier):
+                    currentSegments.append(.bezier(bezier))
+                    if let end = bezier.endPoint {
+                        currentPoint = end
+                    }
+                    // Second control point for smooth continuation
+                    if bezier.controlPoints.count >= 3 {
+                        lastControlPoint = bezier.controlPoints[bezier.controlPoints.count - 2]
+                    }
+
+                case .smoothCubicBezier(let control2, let end):
+                    // Reflect last control point: control1 = current + (current - last)
+                    let control1: Point
+                    if let last = lastControlPoint {
+                        let displacement = currentPoint - last
+                        control1 = currentPoint + displacement
+                    } else {
+                        control1 = currentPoint
+                    }
+                    let bezier = W3C_SVG2.Bezier<W3C_SVG.Space>.cubic(
+                        from: currentPoint,
+                        control1: control1,
+                        control2: control2,
+                        to: end
+                    )
+                    currentSegments.append(.bezier(bezier))
+                    lastControlPoint = control2
+                    currentPoint = end
+
+                case .quadraticBezier(let control, let end):
+                    let bezier = W3C_SVG2.Bezier<W3C_SVG.Space>.quadratic(
+                        from: currentPoint,
+                        control: control,
+                        to: end
+                    )
+                    currentSegments.append(.bezier(bezier))
+                    lastControlPoint = control
+                    currentPoint = end
+
+                case .smoothQuadraticBezier(let end):
+                    // Reflect last control point
+                    let control: Point
+                    if let last = lastControlPoint {
+                        let displacement = currentPoint - last
+                        control = currentPoint + displacement
+                    } else {
+                        control = currentPoint
+                    }
+                    let bezier = W3C_SVG2.Bezier<W3C_SVG.Space>.quadratic(
+                        from: currentPoint,
+                        control: control,
+                        to: end
+                    )
+                    currentSegments.append(.bezier(bezier))
+                    lastControlPoint = control
+                    currentPoint = end
+
+                case .arc(let arcCmd):
+                    // Convert SVG elliptical arc to Beziers
+                    let beziers = arcCmd.toBeziers(from: currentPoint)
+                    for bezier in beziers {
+                        currentSegments.append(.bezier(bezier))
+                    }
+                    currentPoint = arcCmd.end
+                    lastControlPoint = nil
+
+                case .closePath:
+                    finishSubpath(closed: true)
+                    currentPoint = subpathStart
+                    lastControlPoint = nil
+                }
+            }
+
+            // Finish any remaining open subpath
+            finishSubpath(closed: false)
+
+            return W3C_SVG2.PathGeometry<W3C_SVG.Space>(subpaths: subpaths)
         }
 
         private var input: String
@@ -132,7 +274,7 @@ extension W3C_SVG2.Paths {
                 let newX: W3C_SVG2.SVGSpace.X = isRelative
                     ? currentPoint.x + W3C_SVG2.SVGSpace.Dx(x)
                     : W3C_SVG2.SVGSpace.X(x)
-                commands.append(.horizontalLineTo(x: newX._rawValue))
+                commands.append(.horizontalLineTo(x: newX))
                 currentPoint = W3C_SVG2.Point<W3C_SVG.Space>(x: newX, y: currentPoint.y)
                 lastControlPoint = nil
             }
@@ -143,7 +285,7 @@ extension W3C_SVG2.Paths {
                 let newY: W3C_SVG2.SVGSpace.Y = isRelative
                     ? currentPoint.y + W3C_SVG2.SVGSpace.Dy(y)
                     : W3C_SVG2.SVGSpace.Y(y)
-                commands.append(.verticalLineTo(y: newY._rawValue))
+                commands.append(.verticalLineTo(y: newY))
                 currentPoint = W3C_SVG2.Point<W3C_SVG.Space>(x: currentPoint.x, y: newY)
                 lastControlPoint = nil
             }

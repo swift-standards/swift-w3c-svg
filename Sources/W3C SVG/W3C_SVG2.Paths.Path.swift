@@ -74,20 +74,20 @@ extension W3C_SVG2.Paths {
     /// - ``PathCommand``
     /// - ``PathParser``
     public struct Path: SVGElementType, Sendable, Equatable {
-        /// The parsed path commands.
-        public var commands: [PathCommand]
+        /// The underlying path geometry from swift-standards.
+        public var geometry: W3C_SVG2.PathGeometry<W3C_SVG.Space>
 
         /// The fill rule for determining path interior
         ///
         /// Default value: nonzero
         public var fillRule: W3C_SVG2.Painting.FillRule?
 
-        /// The path data string (computed from commands).
+        /// The path data string (serialized from geometry).
         ///
-        /// Returns a serialized version of the commands in SVG path data format.
+        /// Returns a serialized version of the path in SVG path data format.
         public var d: String? {
-            guard !commands.isEmpty else { return nil }
-            return commands.map { $0.description }.joined(separator: " ")
+            guard !geometry.isEmpty else { return nil }
+            return PathSerializer.serialize(geometry)
         }
 
         /// Creates a path element from a path data string.
@@ -97,140 +97,24 @@ extension W3C_SVG2.Paths {
         ///   - fillRule: The fill rule (default: nil, uses nonzero)
         public init(d: String? = nil, fillRule: W3C_SVG2.Painting.FillRule? = nil) {
             if let d = d {
-                self.commands = PathParser.parse(d)
+                self.geometry = PathParser.parse(d)
             } else {
-                self.commands = []
+                self.geometry = .init(subpaths: [])
             }
             self.fillRule = fillRule
         }
 
-        /// Creates a path element from commands directly.
+        /// Creates a path element from geometry directly.
         ///
         /// - Parameters:
-        ///   - commands: The path commands
+        ///   - geometry: The path geometry
         ///   - fillRule: The fill rule (default: nil, uses nonzero)
-        public init(commands: [PathCommand], fillRule: W3C_SVG2.Painting.FillRule? = nil) {
-            self.commands = commands
+        public init(
+            geometry: W3C_SVG2.PathGeometry<W3C_SVG.Space>,
+            fillRule: W3C_SVG2.Painting.FillRule? = nil
+        ) {
+            self.geometry = geometry
             self.fillRule = fillRule
-        }
-
-        /// Convert the path to Bezier curves.
-        ///
-        /// This flattens the path into a series of Bezier curves that can be
-        /// used for rendering or geometric operations.
-        ///
-        /// - Returns: Array of Bezier curves representing the path
-        public func toBezierPath() -> [W3C_SVG2.Bezier<W3C_SVG.Space>] {
-            var beziers: [W3C_SVG2.Bezier<W3C_SVG.Space>] = []
-            var currentPoint: W3C_SVG2.Point<W3C_SVG.Space> = .init(x: .init(0), y: .init(0))
-            var startPoint: W3C_SVG2.Point<W3C_SVG.Space> = currentPoint
-            var lastControlPoint: W3C_SVG2.Point<W3C_SVG.Space>?
-
-            for command in commands {
-                switch command {
-                case .moveTo(let point):
-                    currentPoint = point
-                    startPoint = point
-                    lastControlPoint = nil
-
-                case .lineTo(let point):
-                    beziers.append(.linear(from: currentPoint, to: point))
-                    currentPoint = point
-                    lastControlPoint = nil
-
-                case .horizontalLineTo(let x):
-                    let point = W3C_SVG2.Point<W3C_SVG.Space>(
-                        x: W3C_SVG2.SVGSpace.X(x),
-                        y: currentPoint.y
-                    )
-                    beziers.append(.linear(from: currentPoint, to: point))
-                    currentPoint = point
-                    lastControlPoint = nil
-
-                case .verticalLineTo(let y):
-                    let point = W3C_SVG2.Point<W3C_SVG.Space>(
-                        x: currentPoint.x,
-                        y: W3C_SVG2.SVGSpace.Y(y)
-                    )
-                    beziers.append(.linear(from: currentPoint, to: point))
-                    currentPoint = point
-                    lastControlPoint = nil
-
-                case .cubicBezier(let bezier):
-                    beziers.append(bezier)
-                    if let end = bezier.endPoint {
-                        currentPoint = end
-                    }
-                    if bezier.controlPoints.count >= 3 {
-                        lastControlPoint = bezier.controlPoints[bezier.controlPoints.count - 2]
-                    }
-
-                case .smoothCubicBezier(let control2, let end):
-                    // Reflect last control point to get control1
-                    // Reflection formula: new = current + (current - last)
-                    let control1: W3C_SVG2.Point<W3C_SVG.Space>
-                    if let last = lastControlPoint {
-                        let newX = currentPoint.x + (currentPoint.x - last.x)
-                        let newY = currentPoint.y + (currentPoint.y - last.y)
-                        control1 = W3C_SVG2.Point<W3C_SVG.Space>(x: newX, y: newY)
-                    } else {
-                        control1 = currentPoint
-                    }
-                    let bezier = W3C_SVG2.Bezier<W3C_SVG.Space>.cubic(
-                        from: currentPoint,
-                        control1: control1,
-                        control2: control2,
-                        to: end
-                    )
-                    beziers.append(bezier)
-                    lastControlPoint = control2
-                    currentPoint = end
-
-                case .quadraticBezier(let control, let end):
-                    let bezier = W3C_SVG2.Bezier<W3C_SVG.Space>.quadratic(
-                        from: currentPoint,
-                        control: control,
-                        to: end
-                    )
-                    beziers.append(bezier)
-                    lastControlPoint = control
-                    currentPoint = end
-
-                case .smoothQuadraticBezier(let end):
-                    // Reflection formula: new = current + (current - last)
-                    let control: W3C_SVG2.Point<W3C_SVG.Space>
-                    if let last = lastControlPoint {
-                        let newX = currentPoint.x + (currentPoint.x - last.x)
-                        let newY = currentPoint.y + (currentPoint.y - last.y)
-                        control = W3C_SVG2.Point<W3C_SVG.Space>(x: newX, y: newY)
-                    } else {
-                        control = currentPoint
-                    }
-                    let bezier = W3C_SVG2.Bezier<W3C_SVG.Space>.quadratic(
-                        from: currentPoint,
-                        control: control,
-                        to: end
-                    )
-                    beziers.append(bezier)
-                    lastControlPoint = control
-                    currentPoint = end
-
-                case .arc(let arcCmd):
-                    let arcBeziers = arcCmd.toBeziers(from: currentPoint)
-                    beziers.append(contentsOf: arcBeziers)
-                    currentPoint = arcCmd.end
-                    lastControlPoint = nil
-
-                case .closePath:
-                    if currentPoint != startPoint {
-                        beziers.append(.linear(from: currentPoint, to: startPoint))
-                    }
-                    currentPoint = startPoint
-                    lastControlPoint = nil
-                }
-            }
-
-            return beziers
         }
 
         /// SVG element tag name
@@ -253,10 +137,10 @@ extension W3C_SVG2.Paths.PathCommand: CustomStringConvertible {
             return "L \(point.x._rawValue.formatted(.number)) \(point.y._rawValue.formatted(.number))"
 
         case .horizontalLineTo(let x):
-            return "H \(x.formatted(.number))"
+            return "H \(x._rawValue.formatted(.number))"
 
         case .verticalLineTo(let y):
-            return "V \(y.formatted(.number))"
+            return "V \(y._rawValue.formatted(.number))"
 
         case .cubicBezier(let bezier):
             guard bezier.controlPoints.count >= 4 else { return "" }

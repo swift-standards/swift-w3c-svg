@@ -22,10 +22,10 @@ extension W3C_SVG2.Paths {
         case lineTo(W3C_SVG2.Point<W3C_SVG.Space>)
 
         /// Horizontal line to x coordinate (H)
-        case horizontalLineTo(x: Double)
+        case horizontalLineTo(x: W3C_SVG2.SVGSpace.X)
 
         /// Vertical line to y coordinate (V)
-        case verticalLineTo(y: Double)
+        case verticalLineTo(y: W3C_SVG2.SVGSpace.Y)
 
         /// Cubic Bezier curve (C)
         case cubicBezier(W3C_SVG2.Bezier<W3C_SVG.Space>)
