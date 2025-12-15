@@ -5,6 +5,8 @@
 //  The 'polyline' element (SVG 2 Section 10.6)
 //
 
+import Formatting
+
 extension W3C_SVG2.Shapes {
     /// The 'polyline' element
     ///
@@ -55,7 +57,7 @@ extension W3C_SVG2.Shapes {
         /// - Parameters:
         ///   - coordinates: Array of (x, y) coordinate tuples
         public init(coordinates: [(Double, Double)]) {
-            self.points = coordinates.map { "\($0.0),\($0.1)" }.joined(separator: " ")
+            self.points = coordinates.map { "\($0.0.formatted(.number)),\($0.1.formatted(.number))" }.joined(separator: " ")
         }
 
         /// SVG element tag name

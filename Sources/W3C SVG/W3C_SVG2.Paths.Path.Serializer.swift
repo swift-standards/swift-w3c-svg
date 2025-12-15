@@ -18,7 +18,7 @@ extension W3C_SVG2.Paths.Path {
     ///
     /// ```swift
     /// let d = Path.Serializer.serialize(path)
-    /// // Returns: "M 100 100 L 200 100 L 200 200 Z"
+    /// // Returns: "M100,100 L200,100 L200,200 Z"
     /// ```
     public struct Serializer {
         /// Serialize a Geometry.Path to SVG path data string.
@@ -32,7 +32,7 @@ extension W3C_SVG2.Paths.Path {
                 // MoveTo for subpath start
                 let startX = subpath.startPoint.x._rawValue.formatted(.number)
                 let startY = subpath.startPoint.y._rawValue.formatted(.number)
-                parts.append("M \(startX) \(startY)")
+                parts.append("M\(startX),\(startY)")
 
                 // Serialize each segment
                 for segment in subpath.segments {
@@ -56,7 +56,7 @@ extension W3C_SVG2.Paths.Path {
             case .line(let line):
                 let x = line.end.x._rawValue.formatted(.number)
                 let y = line.end.y._rawValue.formatted(.number)
-                return "L \(x) \(y)"
+                return "L\(x),\(y)"
 
             case .bezier(let bezier):
                 return serializeBezier(bezier)
@@ -98,7 +98,7 @@ extension W3C_SVG2.Paths.Path {
             let x = endPoint.x._rawValue.formatted(.number)
             let y = endPoint.y._rawValue.formatted(.number)
 
-            return "A \(rx) \(ry) \(rot) \(large) \(sweep) \(x) \(y)"
+            return "A\(rx),\(ry) \(rot) \(large) \(sweep) \(x),\(y)"
         }
 
         /// Serialize a Bezier curve.
@@ -110,7 +110,7 @@ extension W3C_SVG2.Paths.Path {
                 // Linear (L command)
                 let x = points[1].x._rawValue.formatted(.number)
                 let y = points[1].y._rawValue.formatted(.number)
-                return "L \(x) \(y)"
+                return "L\(x),\(y)"
 
             case 3:
                 // Quadratic (Q command)
@@ -118,7 +118,7 @@ extension W3C_SVG2.Paths.Path {
                 let cy = points[1].y._rawValue.formatted(.number)
                 let x = points[2].x._rawValue.formatted(.number)
                 let y = points[2].y._rawValue.formatted(.number)
-                return "Q \(cx) \(cy) \(x) \(y)"
+                return "Q\(cx),\(cy) \(x),\(y)"
 
             case 4:
                 // Cubic (C command)
@@ -128,7 +128,7 @@ extension W3C_SVG2.Paths.Path {
                 let c2y = points[2].y._rawValue.formatted(.number)
                 let x = points[3].x._rawValue.formatted(.number)
                 let y = points[3].y._rawValue.formatted(.number)
-                return "C \(c1x) \(c1y) \(c2x) \(c2y) \(x) \(y)"
+                return "C\(c1x),\(c1y) \(c2x),\(c2y) \(x),\(y)"
 
             default:
                 // Higher-order Bezier: approximate with cubics or output as-is
