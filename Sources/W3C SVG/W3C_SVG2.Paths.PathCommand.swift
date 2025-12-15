@@ -111,10 +111,8 @@ extension W3C_SVG2.Paths {
 
             // Convert to center parameterization and create arc
             // This is a simplified implementation - full SVG arc conversion is complex
-            // For now, return a cubic bezier approximation
-            let midX = W3C_SVG2.SVGSpace.X((from.x._rawValue + end.x._rawValue) / 2)
-            let midY = W3C_SVG2.SVGSpace.Y((from.y._rawValue + end.y._rawValue) / 2)
-            let midPoint = W3C_SVG2.Point<W3C_SVG.Space>(x: midX, y: midY)
+            // For now, return a cubic bezier approximation using typed midpoint
+            let midPoint = from.midpoint(to: end)
 
             // Simple quadratic approximation through midpoint
             return [W3C_SVG2.Bezier<W3C_SVG.Space>.quadratic(from: from, control: midPoint, to: end)]
