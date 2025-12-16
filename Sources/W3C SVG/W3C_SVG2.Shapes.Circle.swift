@@ -38,19 +38,19 @@ extension W3C_SVG2.Shapes {
     ///
     /// // Geometry operations
     /// let area = circle.area
-    /// let hitTest = circle.contains(SVG.Point(x: 60, y: 60))
+    /// let hitTest = circle.contains(W3C_SVG2.Point(x: .init(60), y: .init(60)))
     /// ```
     ///
     /// ## See Also
     ///
     /// - ``Ellipse``
     /// - ``Rectangle``
-    public typealias Circle = SVG.Circle
+    public typealias Circle = W3C_SVG2.Circle
 }
 
 // MARK: - SVG-Style API
 
-extension SVG.Circle {
+extension W3C_SVG2.Circle {
     /// The x-axis coordinate of the center of the circle
     ///
     /// SVG attribute: `cx`
@@ -87,7 +87,7 @@ extension SVG.Circle {
 
 // MARK: - SVGElementType Conformance
 
-extension SVG.Circle: SVGElementType {
+extension W3C_SVG2.Circle: SVGElementType {
     /// SVG element tag name
     public static let tagName = "circle"
 

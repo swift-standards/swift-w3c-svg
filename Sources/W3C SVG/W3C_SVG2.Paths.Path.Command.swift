@@ -18,34 +18,34 @@ extension W3C_SVG2.Paths.Path {
     /// Used as an intermediate representation for parsing and serialization.
     public enum Command: Sendable, Equatable {
         /// Move to point (M)
-        case moveTo(W3C_SVG2.Point<W3C_SVG.Space>)
+        case moveTo(W3C_SVG2.Point)
 
         /// Line to point (L)
-        case lineTo(W3C_SVG2.Point<W3C_SVG.Space>)
+        case lineTo(W3C_SVG2.Point)
 
         /// Horizontal line to x coordinate (H)
-        case horizontalLineTo(x: W3C_SVG2.SVGSpace.X)
+        case horizontalLineTo(x: W3C_SVG2.SVGGeometry.X)
 
         /// Vertical line to y coordinate (V)
-        case verticalLineTo(y: W3C_SVG2.SVGSpace.Y)
+        case verticalLineTo(y: W3C_SVG2.SVGGeometry.Y)
 
         /// Cubic Bezier curve (C)
-        case cubicBezier(W3C_SVG2.Bezier<W3C_SVG.Space>)
+        case cubicBezier(W3C_SVG2.Bezier)
 
         /// Smooth cubic Bezier curve (S)
         case smoothCubicBezier(
-            control2: W3C_SVG2.Point<W3C_SVG.Space>,
-            end: W3C_SVG2.Point<W3C_SVG.Space>
+            control2: W3C_SVG2.Point,
+            end: W3C_SVG2.Point
         )
 
         /// Quadratic Bezier curve (Q)
         case quadraticBezier(
-            control: W3C_SVG2.Point<W3C_SVG.Space>,
-            end: W3C_SVG2.Point<W3C_SVG.Space>
+            control: W3C_SVG2.Point,
+            end: W3C_SVG2.Point
         )
 
         /// Smooth quadratic Bezier curve (T)
-        case smoothQuadraticBezier(end: W3C_SVG2.Point<W3C_SVG.Space>)
+        case smoothQuadraticBezier(end: W3C_SVG2.Point)
 
         /// Elliptical arc (A)
         case arc(Arc)
@@ -79,7 +79,7 @@ extension W3C_SVG2.Paths.Path.Command {
         public var sweepFlag: Bool
 
         /// The endpoint of the arc
-        public var end: W3C_SVG2.Point<W3C_SVG.Space>
+        public var end: W3C_SVG2.Point
 
         /// Creates an arc command.
         ///
@@ -96,7 +96,7 @@ extension W3C_SVG2.Paths.Path.Command {
             xAxisRotation: Double,
             largeArcFlag: Bool,
             sweepFlag: Bool,
-            end: W3C_SVG2.Point<W3C_SVG.Space>
+            end: W3C_SVG2.Point
         ) {
             self.rx = rx
             self.ry = ry

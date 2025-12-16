@@ -2,83 +2,100 @@
 //  W3C_SVG2.GeometryTypes.swift
 //  swift-w3c-svg
 //
-//  Re-exports Geometry module and provides type aliases.
-//
-//  RECOMMENDED: Use the SVG namespace for geometry types:
-//  - SVG.Circle, SVG.Rectangle, SVG.Ellipse, SVG.Line, etc.
-//  - SVG.Point, SVG.Vector, SVG.Path, etc.
+//  Re-exports Geometry module and provides SVG-specific type aliases.
 //
 
 @_exported public import Geometry
 
-// MARK: - Generic Geometry Type Aliases
+// MARK: - Underlying Geometry Type
 
 extension W3C_SVG2 {
-    /// A generic 2D point parameterized by coordinate space.
-    ///
-    /// **Prefer using `SVG.Point` for new code.**
-    public typealias Point<Space> = Geometry<Double, Space>.Point<2>
-
-    /// A generic 2D displacement vector parameterized by coordinate space.
-    ///
-    /// **Prefer using `SVG.Vector` for new code.**
-    public typealias Vector<Space> = Geometry<Double, Space>.Vector<2>
-
-    /// A generic Bezier curve parameterized by coordinate space.
-    ///
-    /// **Prefer using `SVG.Bezier` for new code.**
-    public typealias Bezier<Space> = Geometry<Double, Space>.Bezier
-
-    /// A generic ellipse parameterized by coordinate space.
-    ///
-    /// **Prefer using `SVG.Ellipse` for new code.**
-    public typealias Ellipse<Space> = Geometry<Double, Space>.Ellipse
-
-    /// A generic arc parameterized by coordinate space.
-    ///
-    /// **Prefer using `SVG.Arc` for new code.**
-    public typealias Arc<Space> = Geometry<Double, Space>.Arc
-
-    /// A generic line segment parameterized by coordinate space.
-    ///
-    /// **Prefer using `SVG.Line` for new code.**
-    public typealias LineSegment<Space> = Geometry<Double, Space>.Line.Segment
-
-    /// A path geometry parameterized by coordinate space.
-    ///
-    /// **Prefer using `SVG.Path` for new code.**
-    public typealias PathGeometry<Space> = Geometry<Double, Space>.Path
-
     /// SVG coordinate space geometry.
     ///
-    /// **Prefer using `SVG.Space` for new code.**
-    public typealias SVGSpace = Geometry<Double, W3C_SVG.Space>
+    /// This is the base geometry type parameterized for SVG coordinate space.
+    /// All SVG geometry types are derived from this.
+    public typealias SVGGeometry = Geometry<Double, W3C_SVG.Space>
+}
+
+// MARK: - Geometry Primitives
+
+extension W3C_SVG2 {
+    /// A circle in SVG coordinate space.
+    public typealias Circle = SVGGeometry.Circle
+
+    /// A rectangle in SVG coordinate space.
+    public typealias Rectangle = SVGGeometry.Rectangle
+
+    /// An ellipse in SVG coordinate space.
+    public typealias Ellipse = SVGGeometry.Ellipse
+
+    /// A line segment in SVG coordinate space.
+    public typealias Line = SVGGeometry.Line.Segment
+
+    /// A polygon in SVG coordinate space.
+    public typealias Polygon = SVGGeometry.Polygon
+
+    /// A path in SVG coordinate space.
+    public typealias Path = SVGGeometry.Path
+
+    /// An arc in SVG coordinate space.
+    public typealias Arc = SVGGeometry.Arc
+
+    /// A Bezier curve in SVG coordinate space.
+    public typealias Bezier = SVGGeometry.Bezier
+
+    /// A triangle in SVG coordinate space.
+    public typealias Triangle = SVGGeometry.Triangle
 }
 
 // MARK: - Coordinate Types
 
 extension W3C_SVG2 {
     /// X coordinate in SVG space.
-    public typealias X = SVG.X
+    public typealias X = SVGGeometry.X
 
     /// Y coordinate in SVG space.
-    public typealias Y = SVG.Y
+    public typealias Y = SVGGeometry.Y
 
     /// Width extent in SVG space.
-    public typealias Width = SVG.Width
+    public typealias Width = SVGGeometry.Width
 
     /// Height extent in SVG space.
-    public typealias Height = SVG.Height
+    public typealias Height = SVGGeometry.Height
 
     /// X displacement in SVG space.
-    public typealias Dx = SVG.Dx
+    public typealias Dx = SVGGeometry.Dx
 
     /// Y displacement in SVG space.
-    public typealias Dy = SVG.Dy
+    public typealias Dy = SVGGeometry.Dy
 
     /// Radius in SVG space.
-    public typealias Radius = SVG.Radius
+    public typealias Radius = SVGGeometry.Radius
+
+    /// A 2D point in SVG coordinate space.
+    public typealias Point = SVGGeometry.Point<2>
+
+    /// A 2D displacement vector in SVG coordinate space.
+    public typealias Vector = SVGGeometry.Vector<2>
 
     /// Angle in degrees (for transforms and rotations).
     public typealias Degrees = Degree<Double>
+}
+
+// MARK: - Transform
+
+extension W3C_SVG2 {
+    /// An affine transformation in SVG coordinate space.
+    public typealias Transform = SVGGeometry.AffineTransform
+}
+
+// MARK: - Legacy Aliases (for internal use)
+
+extension W3C_SVG2 {
+    /// Legacy: SVG space geometry (use SVGGeometry instead)
+    @available(*, deprecated, renamed: "SVGGeometry")
+    public typealias SVGSpace = SVGGeometry
+
+    /// Legacy: Generic path geometry
+    public typealias PathGeometry<Space> = Geometry<Double, Space>.Path
 }

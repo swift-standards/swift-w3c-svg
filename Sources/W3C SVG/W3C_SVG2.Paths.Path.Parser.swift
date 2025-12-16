@@ -62,7 +62,7 @@ extension W3C_SVG2.Paths.Path {
         private static func convertToGeometry(
             _ commands: [Command]
         ) -> W3C_SVG2.PathGeometry<W3C_SVG.Space> {
-            typealias Point = W3C_SVG2.Point<W3C_SVG.Space>
+            typealias Point = W3C_SVG2.Point
             typealias Segment = W3C_SVG2.PathGeometry<W3C_SVG.Space>.Segment
             typealias Subpath = W3C_SVG2.PathGeometry<W3C_SVG.Space>.Subpath
 
@@ -129,7 +129,7 @@ extension W3C_SVG2.Paths.Path {
                     } else {
                         control1 = currentPoint
                     }
-                    let bezier = W3C_SVG2.Bezier<W3C_SVG.Space>.cubic(
+                    let bezier = W3C_SVG2.Bezier.cubic(
                         from: currentPoint,
                         control1: control1,
                         control2: control2,
@@ -140,7 +140,7 @@ extension W3C_SVG2.Paths.Path {
                     currentPoint = end
 
                 case .quadraticBezier(let control, let end):
-                    let bezier = W3C_SVG2.Bezier<W3C_SVG.Space>.quadratic(
+                    let bezier = W3C_SVG2.Bezier.quadratic(
                         from: currentPoint,
                         control: control,
                         to: end
@@ -158,7 +158,7 @@ extension W3C_SVG2.Paths.Path {
                     } else {
                         control = currentPoint
                     }
-                    let bezier = W3C_SVG2.Bezier<W3C_SVG.Space>.quadratic(
+                    let bezier = W3C_SVG2.Bezier.quadratic(
                         from: currentPoint,
                         control: control,
                         to: end
@@ -169,7 +169,7 @@ extension W3C_SVG2.Paths.Path {
 
                 case .arc(let arcCmd):
                     // Convert SVG arc command to Geometry.Ellipse.Arc segment
-                    let ellipseArc = W3C_SVG2.Ellipse<W3C_SVG.Space>.Arc(
+                    let ellipseArc = W3C_SVG2.Ellipse.Arc(
                         svgArc: arcCmd,
                         from: currentPoint
                     )
@@ -192,9 +192,9 @@ extension W3C_SVG2.Paths.Path {
 
         private var input: String
         private var index: String.Index
-        private var currentPoint: W3C_SVG2.Point<W3C_SVG.Space> = .init(x: .init(0), y: .init(0))
-        private var startPoint: W3C_SVG2.Point<W3C_SVG.Space> = .init(x: .init(0), y: .init(0))
-        private var lastControlPoint: W3C_SVG2.Point<W3C_SVG.Space>?
+        private var currentPoint: W3C_SVG2.Point = .init(x: .init(0), y: .init(0))
+        private var startPoint: W3C_SVG2.Point = .init(x: .init(0), y: .init(0))
+        private var lastControlPoint: W3C_SVG2.Point?
 
         private init(_ input: String) {
             self.input = input
@@ -274,24 +274,24 @@ extension W3C_SVG2.Paths.Path {
 
         private mutating func parseHorizontalLineTo(isRelative: Bool, commands: inout [Command]) {
             while let x = parseNumber() {
-                let newX: W3C_SVG2.SVGSpace.X =
+                let newX: W3C_SVG2.X =
                     isRelative
-                    ? currentPoint.x + W3C_SVG2.SVGSpace.Dx(x)
-                    : W3C_SVG2.SVGSpace.X(x)
+                    ? currentPoint.x + W3C_SVG2.Dx(x)
+                    : W3C_SVG2.X(x)
                 commands.append(.horizontalLineTo(x: newX))
-                currentPoint = W3C_SVG2.Point<W3C_SVG.Space>(x: newX, y: currentPoint.y)
+                currentPoint = W3C_SVG2.Point(x: newX, y: currentPoint.y)
                 lastControlPoint = nil
             }
         }
 
         private mutating func parseVerticalLineTo(isRelative: Bool, commands: inout [Command]) {
             while let y = parseNumber() {
-                let newY: W3C_SVG2.SVGSpace.Y =
+                let newY: W3C_SVG2.Y =
                     isRelative
-                    ? currentPoint.y + W3C_SVG2.SVGSpace.Dy(y)
-                    : W3C_SVG2.SVGSpace.Y(y)
+                    ? currentPoint.y + W3C_SVG2.Dy(y)
+                    : W3C_SVG2.Y(y)
                 commands.append(.verticalLineTo(y: newY))
-                currentPoint = W3C_SVG2.Point<W3C_SVG.Space>(x: currentPoint.x, y: newY)
+                currentPoint = W3C_SVG2.Point(x: currentPoint.x, y: newY)
                 lastControlPoint = nil
             }
         }
@@ -301,7 +301,7 @@ extension W3C_SVG2.Paths.Path {
                 let control2 = parsePoint(isRelative: isRelative),
                 let end = parsePoint(isRelative: isRelative)
             {
-                let bezier = W3C_SVG2.Bezier<W3C_SVG.Space>.cubic(
+                let bezier = W3C_SVG2.Bezier.cubic(
                     from: currentPoint,
                     control1: control1,
                     control2: control2,
@@ -347,7 +347,7 @@ extension W3C_SVG2.Paths.Path {
                 if let last = lastControlPoint {
                     let newX = currentPoint.x + (currentPoint.x - last.x)
                     let newY = currentPoint.y + (currentPoint.y - last.y)
-                    lastControlPoint = W3C_SVG2.Point<W3C_SVG.Space>(x: newX, y: newY)
+                    lastControlPoint = W3C_SVG2.Point(x: newX, y: newY)
                 } else {
                     lastControlPoint = currentPoint
                 }
@@ -379,20 +379,20 @@ extension W3C_SVG2.Paths.Path {
 
         // MARK: - Primitive Parsers
 
-        private mutating func parsePoint(isRelative: Bool) -> W3C_SVG2.Point<W3C_SVG.Space>? {
+        private mutating func parsePoint(isRelative: Bool) -> W3C_SVG2.Point? {
             skipWhitespaceAndCommas()
             guard let x = parseNumber(), let y = parseNumber() else { return nil }
             if isRelative {
                 // Add displacement to current point
-                let displacement = W3C_SVG2.Vector<W3C_SVG.Space>(
-                    dx: W3C_SVG2.SVGSpace.Dx(x),
-                    dy: W3C_SVG2.SVGSpace.Dy(y)
+                let displacement = W3C_SVG2.Vector(
+                    dx: W3C_SVG2.Dx(x),
+                    dy: W3C_SVG2.Dy(y)
                 )
                 return currentPoint + displacement
             } else {
-                return W3C_SVG2.Point<W3C_SVG.Space>(
-                    x: W3C_SVG2.SVGSpace.X(x),
-                    y: W3C_SVG2.SVGSpace.Y(y)
+                return W3C_SVG2.Point(
+                    x: W3C_SVG2.X(x),
+                    y: W3C_SVG2.Y(y)
                 )
             }
         }

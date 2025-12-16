@@ -1,5 +1,5 @@
 //
-//  SVG.Styled.swift
+//  W3C_SVG2.Styled.swift
 //  swift-w3c-svg
 //
 //  Geometry types combined with SVG styling (fill, stroke).
@@ -7,21 +7,21 @@
 
 // MARK: - Styled Namespace
 
-extension SVG {
+extension W3C_SVG2 {
     /// Styled geometry types that combine shape with fill and stroke properties.
     public enum Styled {}
 }
 
 // MARK: - Stroke Configuration
 
-extension SVG.Styled {
+extension W3C_SVG2.Styled {
     /// Stroke configuration for SVG shapes.
     public struct Stroke: Sendable, Hashable {
         /// The stroke color.
         public var color: W3C_SVG2.Types.Color
 
         /// The stroke width.
-        public var width: SVG.Width?
+        public var width: W3C_SVG2.Width?
 
         /// The line cap style.
         public var lineCap: W3C_SVG2.Painting.LineCap?
@@ -32,7 +32,7 @@ extension SVG.Styled {
         /// Creates a stroke configuration.
         public init(
             color: W3C_SVG2.Types.Color,
-            width: SVG.Width? = nil,
+            width: W3C_SVG2.Width? = nil,
             lineCap: W3C_SVG2.Painting.LineCap? = nil,
             lineJoin: W3C_SVG2.Painting.LineJoin? = nil
         ) {
@@ -46,11 +46,11 @@ extension SVG.Styled {
 
 // MARK: - Styled Circle
 
-extension SVG.Styled {
+extension W3C_SVG2.Styled {
     /// A circle with fill and stroke styling.
     public struct Circle: Sendable, Hashable {
         /// The circle geometry.
-        public var geometry: SVG.Circle
+        public var geometry: W3C_SVG2.Circle
 
         /// The fill color.
         public var fill: W3C_SVG2.Types.Color?
@@ -60,7 +60,7 @@ extension SVG.Styled {
 
         /// Creates a styled circle.
         public init(
-            geometry: SVG.Circle,
+            geometry: W3C_SVG2.Circle,
             fill: W3C_SVG2.Types.Color? = nil,
             stroke: Stroke? = nil
         ) {
@@ -73,11 +73,11 @@ extension SVG.Styled {
 
 // MARK: - Styled Rectangle
 
-extension SVG.Styled {
+extension W3C_SVG2.Styled {
     /// A rectangle with fill and stroke styling.
     public struct Rectangle: Sendable, Hashable {
         /// The rectangle geometry.
-        public var geometry: SVG.Rectangle
+        public var geometry: W3C_SVG2.Rectangle
 
         /// The fill color.
         public var fill: W3C_SVG2.Types.Color?
@@ -86,18 +86,18 @@ extension SVG.Styled {
         public var stroke: Stroke?
 
         /// Corner radius for x-axis (optional).
-        public var rx: SVG.Width?
+        public var rx: W3C_SVG2.Width?
 
         /// Corner radius for y-axis (optional).
-        public var ry: SVG.Height?
+        public var ry: W3C_SVG2.Height?
 
         /// Creates a styled rectangle.
         public init(
-            geometry: SVG.Rectangle,
+            geometry: W3C_SVG2.Rectangle,
             fill: W3C_SVG2.Types.Color? = nil,
             stroke: Stroke? = nil,
-            rx: SVG.Width? = nil,
-            ry: SVG.Height? = nil
+            rx: W3C_SVG2.Width? = nil,
+            ry: W3C_SVG2.Height? = nil
         ) {
             self.geometry = geometry
             self.fill = fill
@@ -110,11 +110,11 @@ extension SVG.Styled {
 
 // MARK: - Styled Ellipse
 
-extension SVG.Styled {
+extension W3C_SVG2.Styled {
     /// An ellipse with fill and stroke styling.
     public struct Ellipse: Sendable, Hashable {
         /// The ellipse geometry.
-        public var geometry: SVG.Ellipse
+        public var geometry: W3C_SVG2.Ellipse
 
         /// The fill color.
         public var fill: W3C_SVG2.Types.Color?
@@ -124,7 +124,7 @@ extension SVG.Styled {
 
         /// Creates a styled ellipse.
         public init(
-            geometry: SVG.Ellipse,
+            geometry: W3C_SVG2.Ellipse,
             fill: W3C_SVG2.Types.Color? = nil,
             stroke: Stroke? = nil
         ) {
@@ -137,18 +137,18 @@ extension SVG.Styled {
 
 // MARK: - Styled Line
 
-extension SVG.Styled {
+extension W3C_SVG2.Styled {
     /// A line with stroke styling.
     public struct Line: Sendable, Hashable {
         /// The line geometry.
-        public var geometry: SVG.Line
+        public var geometry: W3C_SVG2.Line
 
         /// The stroke configuration.
         public var stroke: Stroke?
 
         /// Creates a styled line.
         public init(
-            geometry: SVG.Line,
+            geometry: W3C_SVG2.Line,
             stroke: Stroke? = nil
         ) {
             self.geometry = geometry
@@ -159,11 +159,11 @@ extension SVG.Styled {
 
 // MARK: - Styled Polygon
 
-extension SVG.Styled {
+extension W3C_SVG2.Styled {
     /// A polygon with fill and stroke styling.
     public struct Polygon: Sendable, Hashable {
         /// The polygon geometry.
-        public var geometry: SVG.Polygon
+        public var geometry: W3C_SVG2.Polygon
 
         /// The fill color.
         public var fill: W3C_SVG2.Types.Color?
@@ -173,7 +173,7 @@ extension SVG.Styled {
 
         /// Creates a styled polygon.
         public init(
-            geometry: SVG.Polygon,
+            geometry: W3C_SVG2.Polygon,
             fill: W3C_SVG2.Types.Color? = nil,
             stroke: Stroke? = nil
         ) {
@@ -186,11 +186,11 @@ extension SVG.Styled {
 
 // MARK: - Styled Path
 
-extension SVG.Styled {
+extension W3C_SVG2.Styled {
     /// A path with fill and stroke styling.
     public struct Path: Sendable, Hashable {
         /// The path geometry.
-        public var geometry: SVG.Path
+        public var geometry: W3C_SVG2.Path
 
         /// The fill color.
         public var fill: W3C_SVG2.Types.Color?
@@ -203,7 +203,7 @@ extension SVG.Styled {
 
         /// Creates a styled path.
         public init(
-            geometry: SVG.Path,
+            geometry: W3C_SVG2.Path,
             fill: W3C_SVG2.Types.Color? = nil,
             fillRule: W3C_SVG2.Painting.FillRule? = nil,
             stroke: Stroke? = nil

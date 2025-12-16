@@ -64,7 +64,7 @@ extension W3C_SVG2.Paths.Path {
             case .arc(let arc):
                 // Convert circular arc to beziers for serialization
                 // (SVG arcs use endpoint parameterization which is complex to derive)
-                let beziers = [W3C_SVG2.Bezier<W3C_SVG.Space>](arc: arc)
+                let beziers = [W3C_SVG2.Bezier](arc: arc)
                 return beziers.map { serializeBezier($0) }.joined(separator: " ")
 
             case .ellipticalArc(let arc):
@@ -77,7 +77,7 @@ extension W3C_SVG2.Paths.Path {
         ///
         /// Converts from center parameterization back to SVG endpoint parameterization.
         private static func serializeEllipticalArc(
-            _ arc: W3C_SVG2.Ellipse<W3C_SVG.Space>.Arc
+            _ arc: W3C_SVG2.Ellipse.Arc
         ) -> String {
             // Get the endpoint
             let endPoint = arc.endPoint
@@ -102,7 +102,7 @@ extension W3C_SVG2.Paths.Path {
         }
 
         /// Serialize a Bezier curve.
-        private static func serializeBezier(_ bezier: W3C_SVG2.Bezier<W3C_SVG.Space>) -> String {
+        private static func serializeBezier(_ bezier: W3C_SVG2.Bezier) -> String {
             let points = bezier.controlPoints
 
             switch points.count {
