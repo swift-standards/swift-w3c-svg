@@ -20,56 +20,72 @@ extension W3C_SVG2.Shapes {
     ///
     /// - **points**: A list of coordinate pairs defining the polygon path
     ///
+    /// ## Geometry Operations
+    ///
+    /// As a `Geometry.Polygon`, this type provides rich geometric operations:
+    /// - `area` - The area of the polygon (signed for winding direction)
+    /// - `perimeter` - The total length of all edges
+    /// - `centroid` - The geometric center
+    /// - `contains(_:)` - Check if a point is inside the polygon
+    /// - `isConvex` - Whether the polygon is convex
+    /// - `boundingBox` - Axis-aligned bounding rectangle
+    /// - `translated(by:)`, `scaled(by:)` - Transformations
+    ///
     /// ## Behavior
     ///
     /// Unlike polylines, polygons automatically close by performing a closepath
     /// command after connecting all vertices, creating a sealed geometric form.
-    /// If an odd number of coordinates is supplied, the final coordinate is dropped.
     ///
     /// ## Example
     ///
     /// ```swift
     /// // Triangle
-    /// let triangle = W3C_SVG2.Shapes.Polygon(points: "50,0 100,100 0,100")
+    /// let triangle = W3C_SVG2.Shapes.Polygon(coordinates: [
+    ///     (.init(50), .init(0)),
+    ///     (.init(100), .init(100)),
+    ///     (.init(0), .init(100))
+    /// ])
+    ///
+    /// // Geometry operations
+    /// let area = triangle.area
+    /// let isConvex = triangle.isConvex
     /// ```
     ///
     /// ## See Also
     ///
     /// - ``Polyline``
     /// - ``Line``
-    public struct Polygon: SVGElementType, Sendable, Equatable {
-        /// A list of coordinate pairs defining the polygon path
-        ///
-        /// Format: space or comma-separated list of coordinate pairs (x,y)
-        /// Example: "50,0 100,100 0,100" or "50 0 100 100 0 100"
-        ///
-        /// The polygon automatically closes from the last point to the first.
-        public let points: String?
+    public typealias Polygon = W3C_SVG2.Polygon
+}
 
-        /// Creates a polygon element
-        ///
-        /// - Parameters:
-        ///   - points: A list of coordinate pairs (default: nil)
-        public init(
-            points: String? = nil
-        ) {
-            self.points = points
-        }
+// MARK: - SVG-Style API
 
-        /// Creates a polygon element from coordinate tuples
-        ///
-        /// - Parameters:
-        ///   - coordinates: Array of (x, y) coordinate tuples
-        public init(coordinates: [(W3C_SVG2.X, W3C_SVG2.Y)]) {
-            self.points = coordinates.map {
-                "\($0.0._rawValue.formatted(.number)),\($0.1._rawValue.formatted(.number))"
-            }.joined(separator: " ")
-        }
-
-        /// SVG element tag name
-        public static let tagName = "polygon"
-
-        /// Whether this element is self-closing
-        public static let isSelfClosing = false
+extension W3C_SVG2.Polygon {
+    /// The points string for SVG output
+    ///
+    /// SVG attribute: `points`
+    /// Format: space-separated list of "x,y" coordinate pairs
+    public var points: String {
+        vertices.map {
+            "\($0.x._rawValue.formatted(.number)),\($0.y._rawValue.formatted(.number))"
+        }.joined(separator: " ")
     }
+
+    /// Creates a polygon element from coordinate tuples
+    ///
+    /// - Parameters:
+    ///   - coordinates: Array of (x, y) coordinate tuples
+    public init(coordinates: [(W3C_SVG2.X, W3C_SVG2.Y)]) {
+        self.init(vertices: coordinates.map { .init(x: $0.0, y: $0.1) })
+    }
+}
+
+// MARK: - SVGElementType Conformance
+
+extension W3C_SVG2.Polygon: SVGElementType {
+    /// SVG element tag name
+    public static let tagName = "polygon"
+
+    /// Whether this element is self-closing
+    public static let isSelfClosing = false
 }

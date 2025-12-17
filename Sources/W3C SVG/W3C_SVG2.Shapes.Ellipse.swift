@@ -20,60 +20,89 @@ extension W3C_SVG2.Shapes {
     /// - **rx**: The x-axis radius of the ellipse (must be ≥ 0)
     /// - **ry**: The y-axis radius of the ellipse (must be ≥ 0)
     ///
+    /// ## Geometry Operations
+    ///
+    /// As a `Geometry.Ellipse`, this type provides rich geometric operations:
+    /// - `area` - The area of the ellipse (π × rx × ry)
+    /// - `circumference` - Approximate circumference
+    /// - `contains(_:)` - Check if a point is inside the ellipse
+    /// - `boundingBox` - Axis-aligned bounding rectangle
+    /// - `translated(by:)`, `scaled(by:)`, `rotated(by:)` - Transformations
+    ///
     /// ## Example
     ///
     /// ```swift
     /// let ellipse = W3C_SVG2.Shapes.Ellipse(cx: 100, cy: 50, rx: 80, ry: 40)
+    ///
+    /// // Geometry operations
+    /// let area = ellipse.area
+    /// let hitTest = ellipse.contains(W3C_SVG2.Point(x: .init(100), y: .init(50)))
     /// ```
     ///
     /// ## See Also
     ///
     /// - ``Circle``
     /// - ``Rectangle``
-    public struct Ellipse: SVGElementType, Sendable, Equatable {
-        /// The x-axis coordinate of the center of the ellipse
-        ///
-        /// Default value: 0
-        public let cx: W3C_SVG2.X?
+    public typealias Ellipse = W3C_SVG2.Ellipse
+}
 
-        /// The y-axis coordinate of the center of the ellipse
-        ///
-        /// Default value: 0
-        public let cy: W3C_SVG2.Y?
+// MARK: - SVG-Style API
 
-        /// The x-axis radius of the ellipse
-        ///
-        /// A negative value is an error. A value of zero disables rendering.
-        public let rx: W3C_SVG2.Width?
+extension W3C_SVG2.Ellipse {
+    /// The x-axis coordinate of the center of the ellipse
+    ///
+    /// SVG attribute: `cx`
+    @inlinable
+    public var cx: W3C_SVG2.X { center.x }
 
-        /// The y-axis radius of the ellipse
-        ///
-        /// A negative value is an error. A value of zero disables rendering.
-        public let ry: W3C_SVG2.Height?
+    /// The y-axis coordinate of the center of the ellipse
+    ///
+    /// SVG attribute: `cy`
+    @inlinable
+    public var cy: W3C_SVG2.Y { center.y }
 
-        /// Creates an ellipse element
-        ///
-        /// - Parameters:
-        ///   - cx: The x-axis coordinate of the center (default: nil, uses 0)
-        ///   - cy: The y-axis coordinate of the center (default: nil, uses 0)
-        ///   - rx: The x-axis radius (default: nil)
-        ///   - ry: The y-axis radius (default: nil)
-        public init(
-            cx: W3C_SVG2.X? = nil,
-            cy: W3C_SVG2.Y? = nil,
-            rx: W3C_SVG2.Width? = nil,
-            ry: W3C_SVG2.Height? = nil
-        ) {
-            self.cx = cx
-            self.cy = cy
-            self.rx = rx
-            self.ry = ry
-        }
+    /// The x-axis radius of the ellipse
+    ///
+    /// SVG attribute: `rx`
+    /// Note: Maps to semiMajor (assumes axis-aligned ellipse with rx as horizontal radius)
+    @inlinable
+    public var rx: W3C_SVG2.Width { W3C_SVG2.Width(semiMajor._rawValue) }
 
-        /// SVG element tag name
-        public static let tagName = "ellipse"
+    /// The y-axis radius of the ellipse
+    ///
+    /// SVG attribute: `ry`
+    /// Note: Maps to semiMinor (assumes axis-aligned ellipse with ry as vertical radius)
+    @inlinable
+    public var ry: W3C_SVG2.Height { W3C_SVG2.Height(semiMinor._rawValue) }
 
-        /// Whether this element is self-closing
-        public static let isSelfClosing = false
+    /// Creates an ellipse element using SVG-style parameters
+    ///
+    /// - Parameters:
+    ///   - cx: The x-axis coordinate of the center (default: 0)
+    ///   - cy: The y-axis coordinate of the center (default: 0)
+    ///   - rx: The x-axis radius (default: 0)
+    ///   - ry: The y-axis radius (default: 0)
+    @inlinable
+    public init(
+        cx: W3C_SVG2.X = .init(0),
+        cy: W3C_SVG2.Y = .init(0),
+        rx: W3C_SVG2.Width = .init(0),
+        ry: W3C_SVG2.Height = .init(0)
+    ) {
+        self.init(
+            center: .init(x: cx, y: cy),
+            semiMajor: .init(rx._rawValue),
+            semiMinor: .init(ry._rawValue)
+        )
     }
+}
+
+// MARK: - SVGElementType Conformance
+
+extension W3C_SVG2.Ellipse: SVGElementType {
+    /// SVG element tag name
+    public static let tagName = "ellipse"
+
+    /// Whether this element is self-closing
+    public static let isSelfClosing = false
 }
