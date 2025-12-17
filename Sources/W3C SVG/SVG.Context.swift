@@ -15,9 +15,11 @@ extension Geometry.Ball where N == 2, Scalar == Double, Space == W3C_SVG.Space {
 
     /// Context wrapper providing SVG element conversion.
     public struct SVGContext {
-        let circle: Geometry<Double, W3C_SVG.Space>.Circle
+        /// The underlying circle geometry.
+        public let circle: Geometry<Double, W3C_SVG.Space>.Circle
 
-        init(_ circle: Geometry<Double, W3C_SVG.Space>.Circle) {
+        /// Creates an SVG context for a circle.
+        public init(_ circle: Geometry<Double, W3C_SVG.Space>.Circle) {
             self.circle = circle
         }
 
@@ -43,9 +45,11 @@ extension Geometry.Orthotope where N == 2, Scalar == Double, Space == W3C_SVG.Sp
 
     /// Context wrapper providing SVG element conversion.
     public struct SVGContext {
-        let rectangle: Geometry<Double, W3C_SVG.Space>.Rectangle
+        /// The underlying rectangle geometry.
+        public let rectangle: Geometry<Double, W3C_SVG.Space>.Rectangle
 
-        init(_ rectangle: Geometry<Double, W3C_SVG.Space>.Rectangle) {
+        /// Creates an SVG context for a rectangle.
+        public init(_ rectangle: Geometry<Double, W3C_SVG.Space>.Rectangle) {
             self.rectangle = rectangle
         }
 
@@ -72,9 +76,11 @@ extension Geometry.Ellipse where Scalar == Double, Space == W3C_SVG.Space {
 
     /// Context wrapper providing SVG element conversion.
     public struct SVGContext {
-        let ellipse: Geometry<Double, W3C_SVG.Space>.Ellipse
+        /// The underlying ellipse geometry.
+        public let ellipse: Geometry<Double, W3C_SVG.Space>.Ellipse
 
-        init(_ ellipse: Geometry<Double, W3C_SVG.Space>.Ellipse) {
+        /// Creates an SVG context for an ellipse.
+        public init(_ ellipse: Geometry<Double, W3C_SVG.Space>.Ellipse) {
             self.ellipse = ellipse
         }
 
@@ -101,9 +107,11 @@ extension Geometry.Line.Segment where Scalar == Double, Space == W3C_SVG.Space {
 
     /// Context wrapper providing SVG element conversion.
     public struct SVGContext {
-        let segment: Geometry<Double, W3C_SVG.Space>.Line.Segment
+        /// The underlying line segment geometry.
+        public let segment: Geometry<Double, W3C_SVG.Space>.Line.Segment
 
-        init(_ segment: Geometry<Double, W3C_SVG.Space>.Line.Segment) {
+        /// Creates an SVG context for a line segment.
+        public init(_ segment: Geometry<Double, W3C_SVG.Space>.Line.Segment) {
             self.segment = segment
         }
 
@@ -127,9 +135,11 @@ extension Geometry.Polygon where Scalar == Double, Space == W3C_SVG.Space {
 
     /// Context wrapper providing SVG element conversion.
     public struct SVGContext {
-        let polygon: Geometry<Double, W3C_SVG.Space>.Polygon
+        /// The underlying polygon geometry.
+        public let polygon: Geometry<Double, W3C_SVG.Space>.Polygon
 
-        init(_ polygon: Geometry<Double, W3C_SVG.Space>.Polygon) {
+        /// Creates an SVG context for a polygon.
+        public init(_ polygon: Geometry<Double, W3C_SVG.Space>.Polygon) {
             self.polygon = polygon
         }
 
@@ -149,9 +159,11 @@ extension Geometry.Path where Scalar == Double, Space == W3C_SVG.Space {
 
     /// Context wrapper providing SVG element conversion.
     public struct SVGContext {
-        let path: Geometry<Double, W3C_SVG.Space>.Path
+        /// The underlying path geometry.
+        public let path: Geometry<Double, W3C_SVG.Space>.Path
 
-        init(_ path: Geometry<Double, W3C_SVG.Space>.Path) {
+        /// Creates an SVG context for a path.
+        public init(_ path: Geometry<Double, W3C_SVG.Space>.Path) {
             self.path = path
         }
 
