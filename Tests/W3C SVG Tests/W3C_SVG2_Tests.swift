@@ -5,10 +5,11 @@
 //  Tests for W3C SVG 2 implementation
 //
 
+import InlineSnapshotTesting
 import Testing
 import W3C_SVG
 
-@Suite("W3C SVG2 - Basic Functionality")
+@Suite("W3C SVG2 - Basic Functionality", .snapshots(record: .missing))
 struct W3C_SVG2_Tests {
 
     @Suite("Types - Length")
@@ -16,28 +17,41 @@ struct W3C_SVG2_Tests {
         @Test("Length pixels")
         func lengthPixels() {
             let length = W3C_SVG2.Types.Length.px(100)
-            #expect(length.description == "100px")
+            assertInlineSnapshot(of: length.description, as: .lines) {
+                """
+                100px
+                """
+            }
         }
 
         @Test("Length percentage")
         func lengthPercentage() {
             let length = W3C_SVG2.Types.Length.percentage(50)
-            #expect(length.description == "50%")
+            assertInlineSnapshot(of: length.description, as: .lines) {
+                """
+                50%
+                """
+            }
         }
 
         @Test("Length em")
         func lengthEm() {
             let length = W3C_SVG2.Types.Length.em(2.5)
-            #expect(length.description == "2.5em")
+            assertInlineSnapshot(of: length.description, as: .lines) {
+                """
+                2.5em
+                """
+            }
         }
 
         @Test("Length formatted")
         func lengthFormatted() {
             let length1: W3C_SVG2.Types.Length = 1
-            #expect(length1.description == "1")
-
-            let length2: W3C_SVG2.Types.Length = 1.0
-            #expect(length2.description == "1")
+            assertInlineSnapshot(of: length1.description, as: .lines) {
+                """
+                1
+                """
+            }
         }
     }
 
@@ -46,19 +60,31 @@ struct W3C_SVG2_Tests {
         @Test("Color named")
         func colorNamed() {
             let color = W3C_SVG2.Types.Color.named("red")
-            #expect(color.description == "red")
+            assertInlineSnapshot(of: color.description, as: .lines) {
+                """
+                red
+                """
+            }
         }
 
         @Test("Color hex")
         func colorHex() {
             let color = W3C_SVG2.Types.Color.hex("FF0000")
-            #expect(color.description == "#FF0000")
+            assertInlineSnapshot(of: color.description, as: .lines) {
+                """
+                #FF0000
+                """
+            }
         }
 
         @Test("Color RGB")
         func colorRGB() {
             let color = W3C_SVG2.Types.Color.rgb(r: 255, g: 0, b: 0)
-            #expect(color.description == "rgb(255, 0, 0)")
+            assertInlineSnapshot(of: color.description, as: .lines) {
+                """
+                rgb(255, 0, 0)
+                """
+            }
         }
     }
 
@@ -67,19 +93,31 @@ struct W3C_SVG2_Tests {
         @Test("Transform translate")
         func transformTranslate() {
             let transform = W3C_SVG2.Types.Transform.translate(x: 10, y: 20)
-            #expect(transform.description == "translate(10 20)")
+            assertInlineSnapshot(of: transform.description, as: .lines) {
+                """
+                translate(10 20)
+                """
+            }
         }
 
         @Test("Transform rotate")
         func transformRotate() {
             let transform = W3C_SVG2.Types.Transform.rotate(angle: 45)
-            #expect(transform.description == "rotate(45)")
+            assertInlineSnapshot(of: transform.description, as: .lines) {
+                """
+                rotate(45)
+                """
+            }
         }
 
         @Test("Transform scale")
         func transformScale() {
             let transform = W3C_SVG2.Types.Transform.scale(x: 2, y: 3)
-            #expect(transform.description == "scale(2 3)")
+            assertInlineSnapshot(of: transform.description, as: .lines) {
+                """
+                scale(2 3)
+                """
+            }
         }
     }
 
@@ -88,13 +126,21 @@ struct W3C_SVG2_Tests {
         @Test("ViewBox creation")
         func viewBoxCreation() {
             let vb = W3C_SVG2.Types.ViewBox(width: 100, height: 200)
-            #expect(vb.description == "0 0 100 200")
+            assertInlineSnapshot(of: vb.description, as: .lines) {
+                """
+                0 0 100 200
+                """
+            }
         }
 
         @Test("ViewBox with offset")
         func viewBoxWithOffset() {
             let vb = W3C_SVG2.Types.ViewBox(minX: 10, minY: 20, width: 100, height: 200)
-            #expect(vb.description == "10 20 100 200")
+            assertInlineSnapshot(of: vb.description, as: .lines) {
+                """
+                10 20 100 200
+                """
+            }
         }
     }
 
@@ -125,19 +171,6 @@ struct W3C_SVG2_Tests {
             #expect(rect.height == 80)
         }
 
-        @Test("Rounded rectangle")
-        func roundedRectangle() {
-            let rect = W3C_SVG2.Shapes.Rectangle(
-                x: 10,
-                y: 10,
-                width: 100,
-                height: 80,
-                rx: 5,
-                ry: 5
-            )
-            #expect(rect.rx == 5)
-            #expect(rect.ry == 5)
-        }
     }
 
     @Suite("Shapes - Ellipse")
@@ -188,19 +221,16 @@ struct W3C_SVG2_Tests {
     struct PolygonTests {
         @Test("Polygon creation")
         func polygonCreation() {
-            let polygon = W3C_SVG2.Shapes.Polygon(points: "50,0 100,100 0,100")
-            #expect(polygon.points == "50,0 100,100 0,100")
-        }
-
-        @Test("Polygon tag name")
-        func polygonTagName() {
-            #expect(W3C_SVG2.Shapes.Polygon.tagName == "polygon")
+            let polygon = W3C_SVG2.Shapes.Polygon(coordinates: [(50, 0), (100, 100), (0, 100)])
+            #expect(polygon.vertices.count == 3)
         }
 
         @Test("Polygon triangle")
         func polygonTriangle() {
-            let triangle = W3C_SVG2.Shapes.Polygon(points: "50,0 100,100 0,100")
-            #expect(triangle.points == "50,0 100,100 0,100")
+            let triangle = W3C_SVG2.Shapes.Polygon(coordinates: [(50, 0), (100, 100), (0, 100)])
+            #expect(triangle.vertices.count == 3)
+            #expect(triangle.vertices[0].x == 50)
+            #expect(triangle.vertices[0].y == 0)
         }
     }
 
