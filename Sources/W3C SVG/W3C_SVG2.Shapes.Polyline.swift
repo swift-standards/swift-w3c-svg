@@ -5,7 +5,7 @@
 //  The 'polyline' element (SVG 2 Section 10.6)
 //
 
-import Formatting
+import Formatting_Primitives
 
 extension W3C_SVG2.Shapes {
     /// The 'polyline' element

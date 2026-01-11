@@ -5,8 +5,8 @@
 //  The 'path' element (SVG 2 Section 9)
 //
 
-import Formatting
-public import Geometry
+import Formatting_Primitives
+public import Geometry_Primitives
 
 extension W3C_SVG2.Paths {
     /// The 'path' element

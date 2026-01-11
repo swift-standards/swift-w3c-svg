@@ -5,7 +5,7 @@
 //  Context wrappers that convert geometry types to SVG elements.
 //
 
-import Formatting
+import Formatting_Primitives
 
 // MARK: - Circle Context
 

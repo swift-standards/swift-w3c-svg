@@ -18,15 +18,16 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(url: "https://github.com/swift-standards/swift-standards", from: "0.15.0"),
+        .package(path: "../../swift-primitives/swift-formatting-primitives"),
+        .package(path: "../../swift-primitives/swift-geometry-primitives"),
         .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", from: "1.18.0"),
     ],
     targets: [
         .target(
             name: "W3C SVG",
             dependencies: [
-                .product(name: "Formatting", package: "swift-standards"),
-                .product(name: "Geometry", package: "swift-standards"),
+                .product(name: "Formatting Primitives", package: "swift-formatting-primitives"),
+                .product(name: "Geometry Primitives", package: "swift-geometry-primitives"),
             ]
         ),
         .testTarget(

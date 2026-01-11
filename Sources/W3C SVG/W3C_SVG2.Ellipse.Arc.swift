@@ -5,7 +5,7 @@
 //  Extensions to Geometry types for SVG-specific initializers.
 //
 
-public import Geometry
+public import Geometry_Primitives
 
 // MARK: - Ellipse.Arc from SVG Arc Command
 

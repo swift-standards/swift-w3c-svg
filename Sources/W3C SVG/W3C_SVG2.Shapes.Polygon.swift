@@ -5,7 +5,7 @@
 //  The 'polygon' element (SVG 2 Section 10.7)
 //
 
-import Formatting
+import Formatting_Primitives
 
 extension W3C_SVG2.Shapes {
     /// The 'polygon' element

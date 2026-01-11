@@ -5,7 +5,7 @@
 //  Re-exports Geometry module and provides SVG-specific type aliases.
 //
 
-@_exported public import Geometry
+@_exported public import Geometry_Primitives
 
 // MARK: - Underlying Geometry Type
 

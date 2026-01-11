@@ -6,7 +6,7 @@
 //
 
 import Foundation
-internal import Geometry
+internal import Geometry_Primitives
 
 extension W3C_SVG2.Paths.Path {
     /// Parser for SVG path data strings.
