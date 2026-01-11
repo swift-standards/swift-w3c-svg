@@ -59,7 +59,7 @@ extension W3C_SVG2.Types {
 
         /// String representation for SVG output
         public var description: String {
-            "\(minX._rawValue.formatted(.number)) \(minY._rawValue.formatted(.number)) \(width._rawValue.formatted(.number)) \(height._rawValue.formatted(.number))"
+            "\(minX.rawValue.formatted(.number)) \(minY.rawValue.formatted(.number)) \(width.rawValue.formatted(.number)) \(height.rawValue.formatted(.number))"
         }
     }
 }
