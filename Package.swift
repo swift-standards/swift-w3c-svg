@@ -18,8 +18,8 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(path: "../../swift-primitives/swift-formatting-primitives"),
-        .package(path: "../../swift-primitives/swift-geometry-primitives"),
+        .package(url: "https://github.com/swift-primitives/swift-formatting-primitives.git", from: "0.0.1"),
+        .package(url: "https://github.com/swift-primitives/swift-geometry-primitives.git", from: "0.0.1"),
         .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", from: "1.18.0"),
     ],
     targets: [
