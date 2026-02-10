@@ -46,8 +46,8 @@ extension W3C_SVG2.Types {
         ///   - width: Width of viewport
         ///   - height: Height of viewport
         public init(
-            minX: W3C_SVG2.X = 0,
-            minY: W3C_SVG2.Y = 0,
+            minX: W3C_SVG2.X = .zero,
+            minY: W3C_SVG2.Y = .zero,
             width: W3C_SVG2.Width,
             height: W3C_SVG2.Height
         ) {

@@ -19,7 +19,7 @@ extension W3C_SVG2.Ellipse.Arc {
     ///   - from: The starting point of the arc
     public init(svgArc: W3C_SVG2.Paths.Path.Command.Arc, from: W3C_SVG2.Point) {
         // Convert degrees to radians for rotation
-        let rotationRadians = Radian(svgArc.xAxisRotation * .pi / 180)
+        let rotationRadians = svgArc.xAxisRotation.radians
 
         self.init(
             from: from,

@@ -70,7 +70,7 @@ extension W3C_SVG2.Paths.Path.Command {
         public var ry: Double
 
         /// Rotation of the ellipse in degrees
-        public var xAxisRotation: Double
+        public var xAxisRotation: Degree<Double>
 
         /// If true, use the larger arc
         public var largeArcFlag: Bool
@@ -93,7 +93,7 @@ extension W3C_SVG2.Paths.Path.Command {
         public init(
             rx: Double,
             ry: Double,
-            xAxisRotation: Double,
+            xAxisRotation: Degree<Double>,
             largeArcFlag: Bool,
             sweepFlag: Bool,
             end: W3C_SVG2.Point
@@ -151,7 +151,7 @@ extension W3C_SVG2.Paths.Path.Command: CustomStringConvertible {
             let largeArc = arc.largeArcFlag ? "1" : "0"
             let sweep = arc.sweepFlag ? "1" : "0"
             return
-                "A \(arc.rx.formatted(.number)) \(arc.ry.formatted(.number)) \(arc.xAxisRotation.formatted(.number)) \(largeArc) \(sweep) \(arc.end.x.rawValue.formatted(.number)) \(arc.end.y.rawValue.formatted(.number))"
+                "A \(arc.rx.formatted(.number)) \(arc.ry.formatted(.number)) \(arc.xAxisRotation.rawValue.formatted(.number)) \(largeArc) \(sweep) \(arc.end.x.rawValue.formatted(.number)) \(arc.end.y.rawValue.formatted(.number))"
 
         case .closePath:
             return "Z"

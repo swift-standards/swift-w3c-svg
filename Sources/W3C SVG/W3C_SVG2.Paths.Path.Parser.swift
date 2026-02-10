@@ -366,7 +366,7 @@ extension W3C_SVG2.Paths.Path {
                 let arcCmd = Command.Arc(
                     rx: rx,
                     ry: ry,
-                    xAxisRotation: rotation,
+                    xAxisRotation: Degree(__unchecked: (), rotation),
                     largeArcFlag: largeArc,
                     sweepFlag: sweep,
                     end: end
