@@ -20,7 +20,7 @@ let package = Package(
     dependencies: [
         .package(path: "../../swift-primitives/swift-formatting-primitives"),
         .package(path: "../../swift-primitives/swift-geometry-primitives"),
-        .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", from: "1.18.0")
+        // .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", from: "1.18.0")
     ],
     targets: [
         .target(
@@ -29,7 +29,13 @@ let package = Package(
                 .product(name: "Formatting Primitives", package: "swift-formatting-primitives"),
                 .product(name: "Geometry Primitives", package: "swift-geometry-primitives")
             ]
-        )
+        ),
+        .testTarget(
+            name: "W3C SVG Tests",
+            dependencies: [
+                "W3C SVG",
+            ]
+        ),
     ],
     swiftLanguageModes: [.v6]
 )
@@ -40,6 +46,7 @@ for target in package.targets where ![.system, .binary, .plugin, .macro].contain
         .enableUpcomingFeature("ExistentialAny"),
         .enableUpcomingFeature("InternalImportsByDefault"),
         .enableUpcomingFeature("MemberImportVisibility"),
+        .enableUpcomingFeature("NonisolatedNonsendingByDefault"),
         .enableExperimentalFeature("Lifetimes"),
         .enableExperimentalFeature("SuppressedAssociatedTypes"),
         .enableExperimentalFeature("SuppressedAssociatedTypesWithDefaults"),
