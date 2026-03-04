@@ -44,7 +44,6 @@ extension W3C_SVG2.Types.Color.Parse {
 }
 
 extension W3C_SVG2.Types.Color.Parse: Parser.`Protocol` {
-    public typealias ParseOutput = Output
     public typealias Failure = W3C_SVG2.Types.Color.Parse<Input>.Error
 
     @inlinable

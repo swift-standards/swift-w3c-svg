@@ -33,7 +33,6 @@ extension W3C_SVG2.Parse.Number {
 }
 
 extension W3C_SVG2.Parse.Number: Parser.`Protocol` {
-    public typealias ParseOutput = Output
     public typealias Failure = W3C_SVG2.Parse.Number<Input>.Error
 
     @inlinable

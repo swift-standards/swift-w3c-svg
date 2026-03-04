@@ -43,7 +43,6 @@ extension W3C_SVG2.Types.ViewBox.Parse {
 }
 
 extension W3C_SVG2.Types.ViewBox.Parse: Parser.`Protocol` {
-    public typealias ParseOutput = Output
     public typealias Failure = W3C_SVG2.Types.ViewBox.Parse<Input>.Error
 
     @inlinable

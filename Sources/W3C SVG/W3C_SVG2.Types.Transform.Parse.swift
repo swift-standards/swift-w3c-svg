@@ -49,7 +49,6 @@ extension W3C_SVG2.Types.Transform.Parse {
 }
 
 extension W3C_SVG2.Types.Transform.Parse: Parser.`Protocol` {
-    public typealias ParseOutput = Output
     public typealias Failure = W3C_SVG2.Types.Transform.Parse<Input>.Error
 
     @inlinable
