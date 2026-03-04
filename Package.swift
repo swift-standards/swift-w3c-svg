@@ -20,6 +20,7 @@ let package = Package(
     dependencies: [
         .package(path: "../../swift-primitives/swift-formatting-primitives"),
         .package(path: "../../swift-primitives/swift-geometry-primitives"),
+        .package(path: "../../swift-primitives/swift-parser-primitives"),
         // .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", from: "1.18.0")
     ],
     targets: [
@@ -27,7 +28,8 @@ let package = Package(
             name: "W3C SVG",
             dependencies: [
                 .product(name: "Formatting Primitives", package: "swift-formatting-primitives"),
-                .product(name: "Geometry Primitives", package: "swift-geometry-primitives")
+                .product(name: "Geometry Primitives", package: "swift-geometry-primitives"),
+                .product(name: "Parser Primitives", package: "swift-parser-primitives")
             ]
         ),
         .testTarget(
