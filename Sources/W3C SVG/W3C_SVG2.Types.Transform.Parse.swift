@@ -1,5 +1,5 @@
 //
-//  W3C_SVG2.Parse.Transform.swift
+//  W3C_SVG2.Types.Transform.Parse.swift
 //  swift-w3c-svg
 //
 //  SVG transform: space-separated list of transform functions
@@ -7,7 +7,7 @@
 
 public import Parser_Primitives
 
-extension W3C_SVG2.Parse {
+extension W3C_SVG2.Types.Transform {
     /// Parses an SVG transform attribute value.
     ///
     /// SVG 2 Section 8.4: `<transform-list>` grammar.
@@ -21,14 +21,14 @@ extension W3C_SVG2.Parse {
     /// - `matrix(a b c d e f)`
     ///
     /// Returns an array of parsed transform functions.
-    public struct Transform<Input: Collection.Slice.`Protocol`>: Sendable
+    public struct Parse<Input: Collection.Slice.`Protocol`>: Sendable
     where Input: Sendable, Input.Element == UInt8 {
         @inlinable
         public init() {}
     }
 }
 
-extension W3C_SVG2.Parse.Transform {
+extension W3C_SVG2.Types.Transform.Parse {
     public enum Function: Sendable, Equatable {
         case translate(tx: Double, ty: Double)
         case rotate(angle: Double, cx: Double, cy: Double)
@@ -48,9 +48,9 @@ extension W3C_SVG2.Parse.Transform {
     }
 }
 
-extension W3C_SVG2.Parse.Transform: Parser.`Protocol` {
+extension W3C_SVG2.Types.Transform.Parse: Parser.`Protocol` {
     public typealias ParseOutput = Output
-    public typealias Failure = W3C_SVG2.Parse.Transform<Input>.Error
+    public typealias Failure = W3C_SVG2.Types.Transform.Parse<Input>.Error
 
     @inlinable
     public func parse(_ input: inout Input) throws(Failure) -> Output {

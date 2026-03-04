@@ -1,5 +1,5 @@
 //
-//  W3C_SVG2.Parse.Color.swift
+//  W3C_SVG2.Types.Color.Parse.swift
 //  swift-w3c-svg
 //
 //  SVG color: hex | rgb() | rgba() | named | currentColor | none
@@ -7,7 +7,7 @@
 
 public import Parser_Primitives
 
-extension W3C_SVG2.Parse {
+extension W3C_SVG2.Types.Color {
     /// Parses an SVG color value.
     ///
     /// SVG 2 Section 4.2: `<color>` grammar.
@@ -16,14 +16,14 @@ extension W3C_SVG2.Parse {
     /// - Hex: `#RGB`, `#RRGGBB`
     /// - Functional: `rgb(r,g,b)`, `rgba(r,g,b,a)`
     /// - Keywords: `currentColor`, `none`, named colors
-    public struct Color<Input: Collection.Slice.`Protocol`>: Sendable
+    public struct Parse<Input: Collection.Slice.`Protocol`>: Sendable
     where Input: Sendable, Input.Element == UInt8 {
         @inlinable
         public init() {}
     }
 }
 
-extension W3C_SVG2.Parse.Color {
+extension W3C_SVG2.Types.Color.Parse {
     public enum Output: Sendable {
         case hex(Input)
         case rgb(r: Int, g: Int, b: Int)
@@ -43,9 +43,9 @@ extension W3C_SVG2.Parse.Color {
     }
 }
 
-extension W3C_SVG2.Parse.Color: Parser.`Protocol` {
+extension W3C_SVG2.Types.Color.Parse: Parser.`Protocol` {
     public typealias ParseOutput = Output
-    public typealias Failure = W3C_SVG2.Parse.Color<Input>.Error
+    public typealias Failure = W3C_SVG2.Types.Color.Parse<Input>.Error
 
     @inlinable
     public func parse(_ input: inout Input) throws(Failure) -> Output {

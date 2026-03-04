@@ -1,5 +1,5 @@
 //
-//  W3C_SVG2.Parse.Length.swift
+//  W3C_SVG2.Types.Length.Parse.swift
 //  swift-w3c-svg
 //
 //  SVG length: number unit?
@@ -7,7 +7,7 @@
 
 public import Parser_Primitives
 
-extension W3C_SVG2.Parse {
+extension W3C_SVG2.Types.Length {
     /// Parses an SVG length value.
     ///
     /// SVG 2 Section 4.1: `<length>` grammar.
@@ -16,14 +16,14 @@ extension W3C_SVG2.Parse {
     ///
     /// Supported units: em, ex, px, in, cm, mm, pt, pc, %.
     /// If no unit is present, returns a unitless number.
-    public struct Length<Input: Collection.Slice.`Protocol`>: Sendable
+    public struct Parse<Input: Collection.Slice.`Protocol`>: Sendable
     where Input: Sendable, Input.Element == UInt8 {
         @inlinable
         public init() {}
     }
 }
 
-extension W3C_SVG2.Parse.Length {
+extension W3C_SVG2.Types.Length.Parse {
     public enum Output: Sendable, Equatable {
         case number(Double)
         case percentage(Double)
@@ -42,9 +42,9 @@ extension W3C_SVG2.Parse.Length {
     }
 }
 
-extension W3C_SVG2.Parse.Length: Parser.`Protocol` {
+extension W3C_SVG2.Types.Length.Parse: Parser.`Protocol` {
     public typealias ParseOutput = Output
-    public typealias Failure = W3C_SVG2.Parse.Length<Input>.Error
+    public typealias Failure = W3C_SVG2.Types.Length.Parse<Input>.Error
 
     @inlinable
     public func parse(_ input: inout Input) throws(Failure) -> Output {

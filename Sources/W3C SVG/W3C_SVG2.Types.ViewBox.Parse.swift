@@ -1,5 +1,5 @@
 //
-//  W3C_SVG2.Parse.ViewBox.swift
+//  W3C_SVG2.Types.ViewBox.Parse.swift
 //  swift-w3c-svg
 //
 //  SVG viewBox: four whitespace/comma-separated numbers
@@ -7,20 +7,20 @@
 
 public import Parser_Primitives
 
-extension W3C_SVG2.Parse {
+extension W3C_SVG2.Types.ViewBox {
     /// Parses an SVG viewBox attribute value.
     ///
     /// SVG 2 Section 8.2: `<min-x> <min-y> <width> <height>`
     ///
     /// Numbers are separated by optional whitespace and/or a single comma.
-    public struct ViewBox<Input: Collection.Slice.`Protocol`>: Sendable
+    public struct Parse<Input: Collection.Slice.`Protocol`>: Sendable
     where Input: Sendable, Input.Element == UInt8 {
         @inlinable
         public init() {}
     }
 }
 
-extension W3C_SVG2.Parse.ViewBox {
+extension W3C_SVG2.Types.ViewBox.Parse {
     public struct Output: Sendable, Equatable {
         public let minX: Double
         public let minY: Double
@@ -42,9 +42,9 @@ extension W3C_SVG2.Parse.ViewBox {
     }
 }
 
-extension W3C_SVG2.Parse.ViewBox: Parser.`Protocol` {
+extension W3C_SVG2.Types.ViewBox.Parse: Parser.`Protocol` {
     public typealias ParseOutput = Output
-    public typealias Failure = W3C_SVG2.Parse.ViewBox<Input>.Error
+    public typealias Failure = W3C_SVG2.Types.ViewBox.Parse<Input>.Error
 
     @inlinable
     public func parse(_ input: inout Input) throws(Failure) -> Output {
