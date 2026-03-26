@@ -86,7 +86,7 @@ extension W3C_SVG2 {
 
 extension W3C_SVG2 {
     /// An affine transformation in SVG coordinate space.
-    public typealias Transform = SVGGeometry.AffineTransform
+    public typealias Transform = SVGGeometry.Transform
 }
 
 // MARK: - Legacy Aliases (for internal use)
