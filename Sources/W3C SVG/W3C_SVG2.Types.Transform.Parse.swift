@@ -28,7 +28,16 @@ extension W3C_SVG2.Types.Transform {
     }
 }
 
+public enum __W3C_SVG2TypesTransformParseError: Swift.Error, Sendable, Equatable {
+    case expectedFunction
+    case expectedOpenParen
+    case expectedCloseParen
+    case numberError(__W3C_SVG2ParseNumberError)
+}
+
 extension W3C_SVG2.Types.Transform.Parse {
+    public typealias Error = __W3C_SVG2TypesTransformParseError
+
     public enum Function: Sendable, Equatable {
         case translate(tx: Double, ty: Double)
         case rotate(angle: Double, cx: Double, cy: Double)
@@ -40,12 +49,6 @@ extension W3C_SVG2.Types.Transform.Parse {
 
     public typealias Output = [Function]
 
-    public enum Error: Swift.Error, Sendable, Equatable {
-        case expectedFunction
-        case expectedOpenParen
-        case expectedCloseParen
-        case numberError(W3C_SVG2.Parse.Number<Input>.Error)
-    }
 }
 
 extension W3C_SVG2.Types.Transform.Parse: Parser.`Protocol` {

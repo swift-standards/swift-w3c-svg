@@ -20,7 +20,14 @@ extension W3C_SVG2.Types.ViewBox {
     }
 }
 
+public enum __W3C_SVG2TypesViewBoxParseError: Swift.Error, Sendable, Equatable {
+    case numberError(__W3C_SVG2ParseNumberError)
+    case expectedFourNumbers
+}
+
 extension W3C_SVG2.Types.ViewBox.Parse {
+    public typealias Error = __W3C_SVG2TypesViewBoxParseError
+
     public struct Output: Sendable, Equatable {
         public let minX: Double
         public let minY: Double
@@ -36,10 +43,6 @@ extension W3C_SVG2.Types.ViewBox.Parse {
         }
     }
 
-    public enum Error: Swift.Error, Sendable, Equatable {
-        case numberError(W3C_SVG2.Parse.Number<Input>.Error)
-        case expectedFourNumbers
-    }
 }
 
 extension W3C_SVG2.Types.ViewBox.Parse: Parser.`Protocol` {

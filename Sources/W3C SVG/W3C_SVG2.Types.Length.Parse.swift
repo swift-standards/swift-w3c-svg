@@ -23,6 +23,10 @@ extension W3C_SVG2.Types.Length {
     }
 }
 
+public enum __W3C_SVG2TypesLengthParseError: Swift.Error, Sendable, Equatable {
+    case numberError(__W3C_SVG2ParseNumberError)
+}
+
 extension W3C_SVG2.Types.Length.Parse {
     public enum Output: Sendable, Equatable {
         case number(Double)
@@ -37,9 +41,7 @@ extension W3C_SVG2.Types.Length.Parse {
         case `in`(Double)
     }
 
-    public enum Error: Swift.Error, Sendable, Equatable {
-        case numberError(W3C_SVG2.Parse.Number<Input>.Error)
-    }
+    public typealias Error = __W3C_SVG2TypesLengthParseError
 }
 
 extension W3C_SVG2.Types.Length.Parse: Parser.`Protocol` {
