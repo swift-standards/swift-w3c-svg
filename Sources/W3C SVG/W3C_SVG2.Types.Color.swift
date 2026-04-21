@@ -5,7 +5,7 @@
 //  SVG color values (SVG 2 Section 4.2)
 //
 
-import Formatting_Primitives
+import Format_Primitives
 
 extension W3C_SVG2.Types {
     /// SVG color value

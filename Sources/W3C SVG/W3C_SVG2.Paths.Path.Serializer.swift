@@ -5,7 +5,7 @@
 //  Serialize Geometry.Path to SVG path data (SVG 2 Section 9)
 //
 
-import Formatting_Primitives
+import Format_Primitives
 internal import Geometry_Primitives
 
 extension W3C_SVG2.Paths.Path {

@@ -5,7 +5,7 @@
 //  SVG transform functions (SVG 2 Section 8)
 //
 
-import Formatting_Primitives
+import Format_Primitives
 
 extension W3C_SVG2.Types {
     /// SVG transform function

@@ -5,7 +5,7 @@
 //  SVG length values (SVG 2 Section 4.1)
 //
 
-import Formatting_Primitives
+import Format_Primitives
 
 extension W3C_SVG2.Types {
     /// SVG length value

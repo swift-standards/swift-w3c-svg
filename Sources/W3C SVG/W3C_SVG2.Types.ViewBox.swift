@@ -5,7 +5,7 @@
 //  SVG viewBox attribute (SVG 2 Section 8.2)
 //
 
-import Formatting_Primitives
+import Format_Primitives
 
 extension W3C_SVG2.Types {
     /// SVG viewBox value
